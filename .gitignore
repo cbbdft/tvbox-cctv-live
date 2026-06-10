@@ -1,0 +1,15 @@
+# Git
+.git/
+*.log
+
+# System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# WorkBuddy
+.workbuddy/
