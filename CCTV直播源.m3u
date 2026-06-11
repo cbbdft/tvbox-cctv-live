@@ -1,30 +1,30 @@
 #EXTM3U x-tvg-url="https://epg.pw/test_channel_page.html"
 # CCTV 全频道直播源 - 自动验证优化版
-# 更新时间: 2026-06-11 14:04:53 CST
+# 更新时间: 2026-06-11 14:05:10 CST
 # 验证超时: 5s | 每频道保留 Top3 最快源
 # 仓库: https://github.com/cbbdft/tvbox-cctv-live
 # CDN 加速: https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u
 
 #EXTINF:-1 tvg-id="CCTV1综合" tvg-name="CCTV-1 综合" tvg-logo="https://epg.pw/channel/CCTV1.png" group-title="央视",CCTV-1 综合
-http://69.30.245.50/live/cctv1.m3u8
-#EXTINF:-1 tvg-id="CCTV1综合" tvg-name="CCTV-1 综合" tvg-logo="https://epg.pw/channel/CCTV1.png" group-title="央视",CCTV-1 综合(备1)
 http://74.91.26.218:82/live/cctv1hd.m3u8
+#EXTINF:-1 tvg-id="CCTV1综合" tvg-name="CCTV-1 综合" tvg-logo="https://epg.pw/channel/CCTV1.png" group-title="央视",CCTV-1 综合(备1)
+http://69.30.245.50/live/cctv1.m3u8
 #EXTINF:-1 tvg-id="CCTV1综合" tvg-name="CCTV-1 综合" tvg-logo="https://epg.pw/channel/CCTV1.png" group-title="央视",CCTV-1 综合(备2)
-http://192.151.150.154/live/cctv1hd.m3u8
+http://38.75.136.137:98/gslb/dsdqbv/cctv1hd.m3u8?auth=test20251009
 
 #EXTINF:-1 tvg-id="CCTV2财经" tvg-name="CCTV-2 财经" tvg-logo="https://epg.pw/channel/CCTV2.png" group-title="央视",CCTV-2 财经
-http://74.91.26.218:82/live/cctv2hd.m3u8
-#EXTINF:-1 tvg-id="CCTV2财经" tvg-name="CCTV-2 财经" tvg-logo="https://epg.pw/channel/CCTV2.png" group-title="央视",CCTV-2 财经(备1)
 http://192.151.150.154/live/cctv2hd.m3u8
-#EXTINF:-1 tvg-id="CCTV2财经" tvg-name="CCTV-2 财经" tvg-logo="https://epg.pw/channel/CCTV2.png" group-title="央视",CCTV-2 财经(备2)
+#EXTINF:-1 tvg-id="CCTV2财经" tvg-name="CCTV-2 财经" tvg-logo="https://epg.pw/channel/CCTV2.png" group-title="央视",CCTV-2 财经(备1)
 http://38.75.136.137:98/gslb/dsdqbv/cctv2hd.m3u8?auth=test20251009
+#EXTINF:-1 tvg-id="CCTV2财经" tvg-name="CCTV-2 财经" tvg-logo="https://epg.pw/channel/CCTV2.png" group-title="央视",CCTV-2 财经(备2)
+http://74.91.26.218:82/live/cctv2hd.m3u8
 
 #EXTINF:-1 tvg-id="CCTV3综艺" tvg-name="CCTV-3 综艺" tvg-logo="https://epg.pw/channel/CCTV3.png" group-title="央视",CCTV-3 综艺
 http://74.91.26.218:82/live/cctv3hd.m3u8
 #EXTINF:-1 tvg-id="CCTV3综艺" tvg-name="CCTV-3 综艺" tvg-logo="https://epg.pw/channel/CCTV3.png" group-title="央视",CCTV-3 综艺(备1)
-http://60.10.139.113:8801/hls/3/index.m3u8
-#EXTINF:-1 tvg-id="CCTV3综艺" tvg-name="CCTV-3 综艺" tvg-logo="https://epg.pw/channel/CCTV3.png" group-title="央视",CCTV-3 综艺(备2)
 http://183.129.255.66:8480/hls/3/index.m3u8
+#EXTINF:-1 tvg-id="CCTV3综艺" tvg-name="CCTV-3 综艺" tvg-logo="https://epg.pw/channel/CCTV3.png" group-title="央视",CCTV-3 综艺(备2)
+http://60.10.139.113:8801/hls/3/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4中文国际" tvg-name="CCTV-4 中文国际" tvg-logo="https://epg.pw/channel/CCTV4.png" group-title="央视",CCTV-4 中文国际
 http://74.91.26.218:82/live/cctv4hd.m3u8
@@ -46,12 +46,12 @@ http://198.204.240.250:82/live/cctv6.m3u8
 #EXTINF:-1 tvg-id="CCTV6电影" tvg-name="CCTV-6 电影" tvg-logo="https://epg.pw/channel/CCTV6.png" group-title="央视",CCTV-6 电影(备1)
 http://120.202.94.181:9446/tsfile/live/0006_1.m3u8?key=txiptv
 #EXTINF:-1 tvg-id="CCTV6电影" tvg-name="CCTV-6 电影" tvg-logo="https://epg.pw/channel/CCTV6.png" group-title="央视",CCTV-6 电影(备2)
-http://112.123.243.37:50085/tsfile/live/0007_1.m3u8?key=txiptv&playlive=0&authid=0
+http://221.226.51.220:50081/newlive/live/hls/6/live.m3u8
 
 #EXTINF:-1 tvg-id="CCTV7国防军事" tvg-name="CCTV-7 国防军事" tvg-logo="https://epg.pw/channel/CCTV7.png" group-title="央视",CCTV-7 国防军事
 http://74.91.26.218:82/live/cctv7hd.m3u8
 #EXTINF:-1 tvg-id="CCTV7国防军事" tvg-name="CCTV-7 国防军事" tvg-logo="https://epg.pw/channel/CCTV7.png" group-title="央视",CCTV-7 国防军事(备1)
-http://38.75.136.137:98/gslb/dsdqpub/cctv7hd.m3u8?auth=testpub
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv7hd
 #EXTINF:-1 tvg-id="CCTV7国防军事" tvg-name="CCTV-7 国防军事" tvg-logo="https://epg.pw/channel/CCTV7.png" group-title="央视",CCTV-7 国防军事(备2)
 http://38.75.136.137:98/gslb/dsdqbv/cctv7hd.m3u8?auth=test20251009
 
@@ -63,25 +63,27 @@ http://198.204.240.250:82/live/cctv8k.m3u8
 http://38.75.136.137:98/gslb/dsdqbv/cctv8hd.m3u8?auth=test20251009
 
 #EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录
-http://74.91.26.218:82/live/cctv9hd.m3u8
+http://38.75.136.137:98/gslb/dsdqbv/cctv9hd.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备1)
+http://74.91.26.218:82/live/cctv9hd.m3u8
+#EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备2)
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv9hd
 #EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备2)
 http://38.75.136.137:98/gslb/dsdqbv/cctv9hd.m3u8?auth=test20251009
 
 #EXTINF:-1 tvg-id="CCTV10科教" tvg-name="CCTV-10 科教" tvg-logo="https://epg.pw/channel/CCTV10.png" group-title="央视",CCTV-10 科教
-http://107.150.60.122/live/cctv10hd.m3u8
-#EXTINF:-1 tvg-id="CCTV10科教" tvg-name="CCTV-10 科教" tvg-logo="https://epg.pw/channel/CCTV10.png" group-title="央视",CCTV-10 科教(备1)
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv10hd
+#EXTINF:-1 tvg-id="CCTV10科教" tvg-name="CCTV-10 科教" tvg-logo="https://epg.pw/channel/CCTV10.png" group-title="央视",CCTV-10 科教(备1)
+http://107.150.60.122/live/cctv10hd.m3u8
 #EXTINF:-1 tvg-id="CCTV10科教" tvg-name="CCTV-10 科教" tvg-logo="https://epg.pw/channel/CCTV10.png" group-title="央视",CCTV-10 科教(备2)
-http://38.75.136.137:98/gslb/dsdqbv/cctv10hd.m3u8?auth=test20251009
+http://74.91.26.218:82/live/cctv10hd.m3u8
 
 #EXTINF:-1 tvg-id="CCTV11戏曲" tvg-name="CCTV-11 戏曲" tvg-logo="https://epg.pw/channel/CCTV11.png" group-title="央视",CCTV-11 戏曲
-http://74.91.26.218:82/live/cctv11hd.m3u8
-#EXTINF:-1 tvg-id="CCTV11戏曲" tvg-name="CCTV-11 戏曲" tvg-logo="https://epg.pw/channel/CCTV11.png" group-title="央视",CCTV-11 戏曲(备1)
 http://198.204.228.26/live/cctv11hd.m3u8
+#EXTINF:-1 tvg-id="CCTV11戏曲" tvg-name="CCTV-11 戏曲" tvg-logo="https://epg.pw/channel/CCTV11.png" group-title="央视",CCTV-11 戏曲(备1)
+http://38.75.136.137:98/gslb/dsdqbv/cctv11hd.m3u8?auth=test20251009
 #EXTINF:-1 tvg-id="CCTV11戏曲" tvg-name="CCTV-11 戏曲" tvg-logo="https://epg.pw/channel/CCTV11.png" group-title="央视",CCTV-11 戏曲(备2)
-http://38.75.136.137:98/gslb/dsdqpub/cctv11hd.m3u8?auth=testpub
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv11hd
 
 #EXTINF:-1 tvg-id="CCTV12社会与法" tvg-name="CCTV-12 社会与法" tvg-logo="https://epg.pw/channel/CCTV12.png" group-title="央视",CCTV-12 社会与法
 http://74.91.26.218:82/live/cctv12hd.m3u8
@@ -96,16 +98,16 @@ http://222.223.41.27:8888/hls/13/index.m3u8
 https://event.pull.hebtv.com/jishi/cp1.m3u8
 
 #EXTINF:-1 tvg-id="CCTV14少儿" tvg-name="CCTV-14 少儿" tvg-logo="https://epg.pw/channel/CCTV14.png" group-title="央视",CCTV-14 少儿
-http://38.75.136.137:98/gslb/dsdqbv/cctv14hd.m3u8?auth=test20251009
-#EXTINF:-1 tvg-id="CCTV14少儿" tvg-name="CCTV-14 少儿" tvg-logo="https://epg.pw/channel/CCTV14.png" group-title="央视",CCTV-14 少儿(备1)
-http://192.151.150.154/live/cctv14hd.m3u8
-#EXTINF:-1 tvg-id="CCTV14少儿" tvg-name="CCTV-14 少儿" tvg-logo="https://epg.pw/channel/CCTV14.png" group-title="央视",CCTV-14 少儿(备2)
 http://74.91.26.218:82/live/cctv14hd.m3u8
+#EXTINF:-1 tvg-id="CCTV14少儿" tvg-name="CCTV-14 少儿" tvg-logo="https://epg.pw/channel/CCTV14.png" group-title="央视",CCTV-14 少儿(备1)
+http://38.75.136.137:98/gslb/dsdqbv/cctv14hd.m3u8?auth=test20251009
+#EXTINF:-1 tvg-id="CCTV14少儿" tvg-name="CCTV-14 少儿" tvg-logo="https://epg.pw/channel/CCTV14.png" group-title="央视",CCTV-14 少儿(备2)
+http://192.151.150.154/live/cctv14hd.m3u8
 
 #EXTINF:-1 tvg-id="CCTV15音乐" tvg-name="CCTV-15 音乐" tvg-logo="https://epg.pw/channel/CCTV15.png" group-title="央视",CCTV-15 音乐
-http://107.150.60.122/live/cctv15hd.m3u8
-#EXTINF:-1 tvg-id="CCTV15音乐" tvg-name="CCTV-15 音乐" tvg-logo="https://epg.pw/channel/CCTV15.png" group-title="央视",CCTV-15 音乐(备1)
 http://74.91.26.218:82/live/cctv15hd.m3u8
+#EXTINF:-1 tvg-id="CCTV15音乐" tvg-name="CCTV-15 音乐" tvg-logo="https://epg.pw/channel/CCTV15.png" group-title="央视",CCTV-15 音乐(备1)
+http://107.150.60.122/live/cctv15hd.m3u8
 #EXTINF:-1 tvg-id="CCTV15音乐" tvg-name="CCTV-15 音乐" tvg-logo="https://epg.pw/channel/CCTV15.png" group-title="央视",CCTV-15 音乐(备2)
 http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv15hd
 
