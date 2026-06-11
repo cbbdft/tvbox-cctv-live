@@ -15,6 +15,9 @@ on:
 jobs:
   update-sources:
     runs-on: ubuntu-latest
+    concurrency:
+      group: cctv-update
+      cancel-in-progress: false  # 不取消正在运行的，排队等待
     permissions:
       contents: write
 
@@ -49,8 +52,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add CCTV直播源.m3u 验证报告.md
           git commit -m "🔄 自动更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M') CST"
-          git pull --rebase origin master
-          git push
+          # 拉取远程更新，冲突时使用本地版本(最新验证结果优先)
+          git pull --rebase -X theirs origin master 2>/dev/null || git rebase --abort 2>/dev/null || true
+          git push origin master 2>/dev/null || (git pull --rebase -X theirs origin master && git push origin master)
 
       - name: 上传验证报告
         if: steps.check_changes.outputs.changed == 'true'
