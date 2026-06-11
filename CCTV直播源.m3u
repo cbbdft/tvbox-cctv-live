@@ -1,7 +1,10 @@
 #EXTM3U x-tvg-url="https://epg.pw/test_channel_page.html"
-# CCTV 全频道直播源 - 2026-06-10 更新
-# 数据来源: GitHub best-fan/iptv-sources (每日自动更新)
-# 更新方法: 访问 https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8 获取最新源
+# CCTV 全频道直播源 - 自动验证优化版
+# 仓库: https://github.com/cbbdft/tvbox-cctv-live
+# CDN加速: https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u
+# 备用CDN: https://cdn.statically.io/gh/cbbdft/tvbox-cctv-live/master/CCTV直播源.m3u
+# 每天自动更新4次 (06:00/12:00/18:00/23:00 北京时间)
+# 每频道保留响应最快的3个源，自动淘汰失效源
 
 #EXTINF:-1 tvg-id="CCTV1" tvg-name="CCTV-1 综合" tvg-logo="https://epg.pw/channel/CCTV1.png" group-title="央视",CCTV-1 综合
 http://39.165.39.49:85/tsfile/live/1001_1.m3u8?key=txiptv&playlive=1&authid=0

@@ -1,0 +1,59 @@
+name: 每日自动更新 CCTV 直播源
+
+on:
+  schedule:
+    # 每天北京时间 6:00, 12:00, 18:00, 23:00 自动运行
+    - cron: "0 22 * * *"   # 北京时间 06:00 (UTC+8)
+    - cron: "0 4 * * *"    # 北京时间 12:00
+    - cron: "0 10 * * *"   # 北京时间 18:00
+    - cron: "0 15 * * *"   # 北京时间 23:00
+  workflow_dispatch:       # 允许手动触发
+  push:
+    paths:
+      - "scripts/validate_sources.py"  # 脚本更新时触发
+
+jobs:
+  update-sources:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 运行源验证脚本
+        run: |
+          python scripts/validate_sources.py --timeout 5 --workers 30 --top-n 3
+
+      - name: 检查是否有更新
+        id: check_changes
+        run: |
+          if git diff --quiet CCTV直播源.m3u 验证报告.md; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "📭 直播源无变化，跳过提交"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "📬 检测到直播源更新!"
+          fi
+
+      - name: 提交并推送更新
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CCTV直播源.m3u 验证报告.md
+          git commit -m "🔄 自动更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M') CST"
+          git push
+
+      - name: 上传验证报告
+        if: steps.check_changes.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-report
+          path: 验证报告.md
