@@ -49,6 +49,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add CCTV直播源.m3u 验证报告.md
           git commit -m "🔄 自动更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M') CST"
+          git pull --rebase origin master
           git push
 
       - name: 上传验证报告
