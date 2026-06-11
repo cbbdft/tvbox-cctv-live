@@ -134,11 +134,18 @@ def normalize_channel_name(name):
     name = re.sub(r'\s*[\(（].*?[\)）]\s*$', '', name)
     name = re.sub(r'\s*(备\d*|备用|HD|高清|超清|4K|标清|HEVC|H265|AVS2?|AVS3)\s*$', '', name, flags=re.IGNORECASE)
 
-    # 尝试别名映射
+    # 尝试别名映射 (精确匹配，避免 CCTV1 误匹配 CCTV10)
     upper = name.upper().replace(" ", "").replace("-", "").replace("_", "")
     for alias, standard in CHANNEL_ALIASES.items():
-        if alias.upper().replace(" ", "").replace("-", "") in upper:
+        alias_clean = alias.upper().replace(" ", "").replace("-", "")
+        # 必须精确匹配或后跟非数字字符（避免 CCTV1 匹配到 CCTV10）
+        if upper == alias_clean:
             return standard
+        # 检查是否为前缀匹配且后面不是数字
+        if upper.startswith(alias_clean):
+            remaining = upper[len(alias_clean):]
+            if not remaining or not remaining[0].isdigit():
+                return standard
 
     # 尝试直接匹配 CCTV 数字 (支持各种格式: CCTV10, CCTV-10, CCTV 10, cctv10)
     match = re.search(r'CCTV[-\s]*(\d+)\+?', name, re.IGNORECASE)
