@@ -32,7 +32,7 @@ jobs:
 
       - name: 运行源验证脚本
         run: |
-          python scripts/validate_sources.py --timeout 5 --workers 30 --top-n 3
+          python scripts/validate_sources.py --timeout 5 --workers 30 --top-n 5
 
       - name: 检查是否有更新
         id: check_changes

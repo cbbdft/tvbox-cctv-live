@@ -8,15 +8,13 @@
 
 ## ⚡ 快速使用
 
-### TVBox 订阅地址（推荐用 CDN 加速版）
+### TVBox 订阅地址（一个就够了）
 
-| 优先级 | 类型 | 订阅地址 |
-|--------|------|----------|
-| ⭐ 推荐 | jsDelivr CDN | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u` |
-| 备选 | Statically CDN | `https://cdn.statically.io/gh/cbbdft/tvbox-cctv-live/master/CCTV直播源.m3u` |
-| 兜底 | GitHub Raw | `https://raw.githubusercontent.com/cbbdft/tvbox-cctv-live/master/CCTV直播源.m3u` |
+```
+https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u
+```
 
-> 💡 **建议**：在 TVBox 中同时添加以上 3 个地址，系统会自动选择最快的。
+> 每个频道内置多个源，一个超时 TVBox 自动切下一个，无需手动配置备用。
 
 ---
 
@@ -37,52 +35,15 @@
 
 ---
 
-## 🤖 自动化机制
+## 🌐 自动更新
 
-```
-┌─────────────────────────────────────────────────┐
-│  GitHub Actions 每天 4 次自动运行                  │
-│  (06:00 / 12:00 / 18:00 / 23:00 北京时间)         │
-├─────────────────────────────────────────────────┤
-│  1. 从 3 个上游源拉取最新直播源                      │
-│  2. 并发验证每个源的可用性 (HTTP + 内容校验)          │
-│  3. 按响应速度排序，每频道保留最快的 3 个源            │
-│  4. 生成优化后的 M3U 文件 + 验证报告                  │
-│  5. 自动提交到 GitHub                               │
-│  6. jsDelivr CDN 自动同步 (全球 200+ 节点)           │
-└─────────────────────────────────────────────────┘
-```
+GitHub Actions 每天 4 次自动运行（06:00 / 12:00 / 18:00 / 23:00 北京时间），从 6 个上游源拉取、验证可用性、按速度排序，每个频道保留最快的 5 个源，失效的自动淘汰。
 
 ---
 
 ## 📊 验证报告
 
 每次自动更新后，可在 [验证报告.md](./验证报告.md) 查看各频道的源可用性详情。
-
----
-
-## 🛠️ 手动运行
-
-```bash
-# 安装 Python 3.11+
-pip install -r requirements.txt  # (空，仅用标准库)
-
-# 运行验证
-python scripts/validate_sources.py
-
-# 自定义参数
-python scripts/validate_sources.py --timeout 5 --workers 30 --top-n 3
-```
-
----
-
-## 🌐 CDN 加速说明
-
-| CDN | 节点数 | 刷新延迟 | 适用场景 |
-|-----|--------|----------|----------|
-| jsDelivr | 全球 200+ | 24h 内 | 国内+海外，推荐首选 |
-| Statically | 全球 100+ | 即时 | 海外用户 |
-| GitHub Raw | 美国 | 即时 | 兜底备用 |
 
 ---
 

@@ -76,7 +76,7 @@ CHANNEL_ORDER = [
 SPORTS_CHANNELS = {"CCTV-5 体育", "CCTV-5+ 体育赛事"}
 
 # 每个频道保留的最优源数量
-TOP_N = 3
+TOP_N = 5
 
 # ─── 工具函数 ────────────────────────────────────────────
 
@@ -359,7 +359,8 @@ def main():
         f"# 更新时间: {now.strftime('%Y-%m-%d %H:%M:%S')} CST",
         f"# 验证超时: {args.timeout}s | 每频道保留 Top{args.top_n} 最快源",
         f"# 仓库: https://github.com/cbbdft/tvbox-cctv-live",
-        f"# CDN 加速: https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u",
+        f"# 订阅地址: https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u",
+        f"# 每个频道多个源，TVBox 会自动切换",
         "",
     ]
 
@@ -430,13 +431,15 @@ def main():
         f"| 频道数 | {len(CHANNEL_ORDER)} |",
         f"| 有可用源的频道 | {sum(1 for ch in CHANNEL_ORDER if len([s for s in results.get(ch, []) if s[2]=='OK']) > 0)} |",
         "",
-        f"## 🚀 CDN 加速订阅地址",
+        f"## 📺 订阅地址",
         f"",
-        f"| CDN | 地址 |",
-        f"|-----|------|",
-        f"| jsDelivr (全球) | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u` |",
-        f"| Statically | `https://cdn.statically.io/gh/cbbdft/tvbox-cctv-live/master/CCTV直播源.m3u` |",
-        f"| GitHub Raw | `https://raw.githubusercontent.com/cbbdft/tvbox-cctv-live/master/CCTV直播源.m3u` |",
+        f"在 TVBox 直播设置中添加以下地址即可：",
+        f"",
+        f"```",
+        f"https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u",
+        f"```",
+        f"",
+        f"> 每个频道内置多个源，TVBox 会自动切换（一个超时自动用下一个）",
         "",
         f"## ⚠ 注意事项",
         f"",
