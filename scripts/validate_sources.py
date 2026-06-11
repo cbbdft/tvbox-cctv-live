@@ -26,9 +26,14 @@ from datetime import datetime, timezone, timedelta
 
 # ─── 配置 ───────────────────────────────────────────────
 UPSTREAM_SOURCES = [
+    # 央视专用源
     "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8",
     "https://raw.githubusercontent.com/zhi35/iptv/main/cn_cctv.m3u8",
+    # 全频道源（含央视）
     "https://raw.githubusercontent.com/cs3306/IPTV-Sources/main/data/output/iptv_collection.m3u",
+    "https://raw.githubusercontent.com/mytv-android/China-TV-Live-M3U8/main/iptv.m3u",
+    "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
+    "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -127,7 +132,7 @@ def normalize_channel_name(name):
     name = name.strip()
     # 移除多余的标记
     name = re.sub(r'\s*[\(（].*?[\)）]\s*$', '', name)
-    name = re.sub(r'\s*(备\d*|备用|HD|高清|超清|4K|标清)\s*$', '', name)
+    name = re.sub(r'\s*(备\d*|备用|HD|高清|超清|4K|标清|HEVC|H265|AVS2?|AVS3)\s*$', '', name, flags=re.IGNORECASE)
 
     # 尝试别名映射
     upper = name.upper().replace(" ", "").replace("-", "").replace("_", "")
@@ -135,13 +140,54 @@ def normalize_channel_name(name):
         if alias.upper().replace(" ", "").replace("-", "") in upper:
             return standard
 
-    # 尝试直接匹配 CCTV 数字
+    # 尝试直接匹配 CCTV 数字 (支持各种格式: CCTV10, CCTV-10, CCTV 10, cctv10)
     match = re.search(r'CCTV[-\s]*(\d+)\+?', name, re.IGNORECASE)
     if match:
         num = match.group(1)
         if match.group(0).endswith("+"):
             return f"CCTV-{num}+ 体育赛事"
+        # 数字范围检查
+        num_int = int(num)
+        if num_int == 1:
+            return "CCTV-1 综合"
+        elif num_int == 2:
+            return "CCTV-2 财经"
+        elif num_int == 3:
+            return "CCTV-3 综艺"
+        elif num_int == 4:
+            return "CCTV-4 中文国际"
+        elif num_int == 5:
+            return "CCTV-5 体育"
+        elif num_int == 6:
+            return "CCTV-6 电影"
+        elif num_int == 7:
+            return "CCTV-7 国防军事"
+        elif num_int == 8:
+            return "CCTV-8 电视剧"
+        elif num_int == 9:
+            return "CCTV-9 纪录"
+        elif num_int == 10:
+            return "CCTV-10 科教"
+        elif num_int == 11:
+            return "CCTV-11 戏曲"
+        elif num_int == 12:
+            return "CCTV-12 社会与法"
+        elif num_int == 13:
+            return "CCTV-13 新闻"
+        elif num_int == 14:
+            return "CCTV-14 少儿"
+        elif num_int == 15:
+            return "CCTV-15 音乐"
+        elif num_int == 16:
+            return "CCTV-16 奥林匹克"
+        elif num_int == 17:
+            return "CCTV-17 农业农村"
         return f"CCTV-{num}"
+
+    # 匹配中文名称: "CCTV4K 超高清", "CCTV5+ 体育赛事" 等
+    for ch_name in CHANNEL_ORDER:
+        if ch_name in name:
+            return ch_name
 
     return name
 
@@ -233,6 +279,20 @@ def main():
             unique_entries.append((name, url))
 
     print(f"\n   总计: {len(all_entries)} 条 → 去重后 {len(unique_entries)} 条\n")
+
+    # ─── Step 1.5: 从现有 M3U 文件补充缺失频道的源 ───
+    print("📥 Step 1.5/4: 从现有文件补充缺失频道...")
+    if os.path.exists(OUTPUT_M3U):
+        existing_content = open(OUTPUT_M3U, "r", encoding="utf-8").read()
+        existing_entries = parse_m3u(existing_content)
+        existing_cctv = [(n, u) for n, u in existing_entries if is_cctv_channel(n)]
+        for name, url in existing_cctv:
+            if url not in seen:
+                seen.add(url)
+                unique_entries.append((name, url))
+        print(f"   补充后总计: {len(unique_entries)} 条")
+    else:
+        print(f"   现有文件不存在，跳过补充")
 
     # ─── Step 2: 按频道分组 ───
     print("📊 Step 2/4: 按频道分组...")
