@@ -1,7 +1,6 @@
 #EXTM3U x-tvg-url="https://epg.pw/test_channel_page.html"
 # CCTV 全频道直播源 - 自动验证优化版
-# 更新时间: 2026-06-14 19:51:05 CST
-# 验证超时: 5s | 每频道保留 Top5 最快源
+# 更新时间: 2026-06-14 23:47 CST (自动更新)
 # 仓库: https://github.com/cbbdft/tvbox-cctv-live
 # 订阅地址: https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u
 # 每个频道多个源，TVBox 会自动切换
@@ -42,24 +41,24 @@ http://60.10.139.113:8801/hls/3/index.m3u8
 #EXTINF:-1 tvg-id="CCTV4中文国际" tvg-name="CCTV-4 中文国际" tvg-logo="https://epg.pw/channel/CCTV4.png" group-title="央视",CCTV-4 中文国际
 http://198.204.240.250:82/live/cctv4k.m3u8
 #EXTINF:-1 tvg-id="CCTV4中文国际" tvg-name="CCTV-4 中文国际" tvg-logo="https://epg.pw/channel/CCTV4.png" group-title="央视",CCTV-4 中文国际(备1)
-http://192.151.150.154/live/cctv4k.m3u8
+http://222.223.41.27:8888/hls/4/index.m3u8
 #EXTINF:-1 tvg-id="CCTV4中文国际" tvg-name="CCTV-4 中文国际" tvg-logo="https://epg.pw/channel/CCTV4.png" group-title="央视",CCTV-4 中文国际(备2)
-http://198.204.228.26/live/cctv4hd.m3u8
-#EXTINF:-1 tvg-id="CCTV4中文国际" tvg-name="CCTV-4 中文国际" tvg-logo="https://epg.pw/channel/CCTV4.png" group-title="央视",CCTV-4 中文国际(备3)
-http://38.75.136.137:98/gslb/dsdqpub/cctv4k.m3u8?auth=testpub
-#EXTINF:-1 tvg-id="CCTV4中文国际" tvg-name="CCTV-4 中文国际" tvg-logo="https://epg.pw/channel/CCTV4.png" group-title="央视",CCTV-4 中文国际(备4)
-http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv4hd
+http://60.10.139.113:8801/hls/4/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽
-http://107.150.60.122/live/cctv5p.m3u8
-#EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽(备1)
-http://38.75.136.137:98/gslb/dsdqbv/cctv5hd.m3u8?auth=test20251009
-#EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽(备2)
-http://198.204.228.26/live/cctv5hd.m3u8
-#EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽(备3)
 http://38.75.136.137:98/gslb/dsdqpub/cctv5hd.m3u8?auth=testpub
-#EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽(备4)
+#EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽(备1)
+http://74.91.26.218:82/live/cctv5hd.m3u8
+#EXTINF:-1 tvg-id="CCTV5体育" tvg-name="CCTV-5 体育" tvg-logo="https://epg.pw/channel/CCTV5.png" group-title="央视",CCTV-5 体育 ⚽(备2)
+http://207.56.13.146:81/cdnlive/cctv5.m3u8
+
+
+#EXTINF:-1 tvg-id="CCTV5PLUS" tvg-name="CCTV-5+ 体育赛事" tvg-logo="https://epg.pw/channel/CCTV5PLUS.png" group-title="央视",CCTV-5+ 体育赛事 ⚽
 http://38.75.136.137:98/gslb/dsdqbv/cctv5p.m3u8?auth=test20251009
+#EXTINF:-1 tvg-id="CCTV5PLUS" tvg-name="CCTV-5+ 体育赛事" tvg-logo="https://epg.pw/channel/CCTV5PLUS.png" group-title="央视",CCTV-5+ 体育赛事 ⚽(备1)
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv5p
+#EXTINF:-1 tvg-id="CCTV5PLUS" tvg-name="CCTV-5+ 体育赛事" tvg-logo="https://epg.pw/channel/CCTV5PLUS.png" group-title="央视",CCTV-5+ 体育赛事 ⚽(备2)
+http://74.91.26.218:82/live/cctv5p.m3u8
 
 
 #EXTINF:-1 tvg-id="CCTV6电影" tvg-name="CCTV-6 电影" tvg-logo="https://epg.pw/channel/CCTV6.png" group-title="央视",CCTV-6 电影
@@ -100,11 +99,7 @@ https://xykt-fix.github.io/Y77.m3u8
 #EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备1)
 http://74.91.26.218:82/live/cctv9hd.m3u8
 #EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备2)
-http://38.75.136.137:98/gslb/dsdqpub/cctv9hd.m3u8?auth=testpub
-#EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备3)
-http://39.165.39.49:85/tsfile/live/1009_1.m3u8?key=txiptv&playlive=1&authid=0
-#EXTINF:-1 tvg-id="CCTV9纪录" tvg-name="CCTV-9 纪录" tvg-logo="https://epg.pw/channel/CCTV9.png" group-title="央视",CCTV-9 纪录(备4)
-http://60.10.139.113:8801/hls/9/index.m3u8
+http://63.141.230.178:82/gslb/zbdq5.m3u8?id=cctv9hd
 
 #EXTINF:-1 tvg-id="CCTV10科教" tvg-name="CCTV-10 科教" tvg-logo="https://epg.pw/channel/CCTV10.png" group-title="央视",CCTV-10 科教
 http://74.91.26.218:82/live/cctv10hd.m3u8
@@ -194,3 +189,5 @@ http://173.208.212.130:8181/720p/cctv17.m3u8
 #EXTINF:-1 tvg-id="CCTV17农业农村" tvg-name="CCTV-17 农业农村" tvg-logo="https://epg.pw/channel/CCTV17.png" group-title="央视",CCTV-17 农业农村(备4)
 http://39.165.39.49:85/tsfile/live/1088_1.m3u8?key=txiptv&playlive=1&authid=0
 
+#EXTINF:-1 tvg-id="CCTV4K" tvg-name="CCTV-4K 超高清" tvg-logo="https://epg.pw/channel/CCTV4K.png" group-title="央视",CCTV-4K 超高清
+http://198.204.240.250:82/live/cctv4k.m3u8

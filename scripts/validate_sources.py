@@ -46,9 +46,9 @@ CHANNEL_ALIASES = {
     "CCTV2": "CCTV-2 财经",
     "CCTV3": "CCTV-3 综艺",
     "CCTV4": "CCTV-4 中文国际",
-    "CCTV5": "CCTV-5 体育",
     "CCTV5+": "CCTV-5+ 体育赛事",
     "CCTV5PLUS": "CCTV-5+ 体育赛事",
+    "CCTV5": "CCTV-5 体育",
     "CCTV6": "CCTV-6 电影",
     "CCTV7": "CCTV-7 国防军事",
     "CCTV8": "CCTV-8 电视剧",
@@ -153,43 +153,7 @@ def normalize_channel_name(name):
         num = match.group(1)
         if match.group(0).endswith("+"):
             return f"CCTV-{num}+ 体育赛事"
-        # 数字范围检查
-        num_int = int(num)
-        if num_int == 1:
-            return "CCTV-1 综合"
-        elif num_int == 2:
-            return "CCTV-2 财经"
-        elif num_int == 3:
-            return "CCTV-3 综艺"
-        elif num_int == 4:
-            return "CCTV-4 中文国际"
-        elif num_int == 5:
-            return "CCTV-5 体育"
-        elif num_int == 6:
-            return "CCTV-6 电影"
-        elif num_int == 7:
-            return "CCTV-7 国防军事"
-        elif num_int == 8:
-            return "CCTV-8 电视剧"
-        elif num_int == 9:
-            return "CCTV-9 纪录"
-        elif num_int == 10:
-            return "CCTV-10 科教"
-        elif num_int == 11:
-            return "CCTV-11 戏曲"
-        elif num_int == 12:
-            return "CCTV-12 社会与法"
-        elif num_int == 13:
-            return "CCTV-13 新闻"
-        elif num_int == 14:
-            return "CCTV-14 少儿"
-        elif num_int == 15:
-            return "CCTV-15 音乐"
-        elif num_int == 16:
-            return "CCTV-16 奥林匹克"
-        elif num_int == 17:
-            return "CCTV-17 农业农村"
-        return f"CCTV-{num}"
+        return _num_to_channel(int(num))
 
     # 匹配中文名称: "CCTV4K 超高清", "CCTV5+ 体育赛事" 等
     for ch_name in CHANNEL_ORDER:
@@ -197,6 +161,38 @@ def normalize_channel_name(name):
             return ch_name
 
     return name
+
+
+def _num_to_channel(num_int):
+    """将 CCTV 频道数字映射为标准名称"""
+    channel_map = {
+        1: "CCTV-1 综合", 2: "CCTV-2 财经", 3: "CCTV-3 综艺",
+        4: "CCTV-4 中文国际", 5: "CCTV-5 体育", 6: "CCTV-6 电影",
+        7: "CCTV-7 国防军事", 8: "CCTV-8 电视剧", 9: "CCTV-9 纪录",
+        10: "CCTV-10 科教", 11: "CCTV-11 戏曲", 12: "CCTV-12 社会与法",
+        13: "CCTV-13 新闻", 14: "CCTV-14 少儿", 15: "CCTV-15 音乐",
+        16: "CCTV-16 奥林匹克", 17: "CCTV-17 农业农村",
+    }
+    return channel_map.get(num_int, f"CCTV-{num_int}")
+
+
+def correct_channel_by_url(channel_name, url):
+    """
+    根据 URL 特征纠正频道分配。
+    上游源可能把 CCTV-5+ 的源标记为 CCTV-5，或把 CCTV-4K 的源标记为 CCTV-4。
+    """
+    url_lower = url.lower()
+    # CCTV-5 体育 vs CCTV-5+ 体育赛事
+    if channel_name == "CCTV-5 体育" and ("cctv5p" in url_lower or "cctv5plus" in url_lower):
+        return "CCTV-5+ 体育赛事"
+    if channel_name == "CCTV-5+ 体育赛事" and ("cctv5hd" in url_lower or "cctv5/" in url_lower):
+        return "CCTV-5 体育"
+    # CCTV-4 中文国际 vs CCTV-4K
+    if channel_name == "CCTV-4 中文国际" and ("cctv4k" in url_lower):
+        return "CCTV-4K 超高清"
+    if channel_name == "CCTV-4K 超高清" and ("cctv4hd" in url_lower or "cctv4/" in url_lower):
+        return "CCTV-4 中文国际"
+    return channel_name
 
 
 def is_cctv_channel(name):
@@ -306,9 +302,11 @@ def main():
     channels = {}
     for name, url in unique_entries:
         normalized = normalize_channel_name(name)
-        if normalized not in channels:
-            channels[normalized] = []
-        channels[normalized].append(url)
+        # 根据 URL 特征纠正频道分配（CCTV-5 vs CCTV-5+, CCTV-4 vs CCTV-4K 等）
+        corrected = correct_channel_by_url(normalized, url)
+        if corrected not in channels:
+            channels[corrected] = []
+        channels[corrected].append(url)
 
     for ch in CHANNEL_ORDER:
         if ch in channels:
