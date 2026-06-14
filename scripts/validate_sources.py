@@ -192,6 +192,16 @@ def correct_channel_by_url(channel_name, url):
         return "CCTV-4K 超高清"
     if channel_name == "CCTV-4K 超高清" and ("cctv4hd" in url_lower or "cctv4/" in url_lower):
         return "CCTV-4 中文国际"
+    # CCTV-8 电视剧 vs CCTV-8K
+    if channel_name == "CCTV-8 电视剧" and ("cctv8k" in url_lower):
+        return None  # 丢弃，不是有效频道
+    # 排除明显错误的频道分配：CCTV-5 的源 URL 指向其他频道
+    if channel_name == "CCTV-5 体育":
+        # hls/15 是 CCTV-15 的流，不是 CCTV-5
+        if "hls/15" in url_lower or "hls/5/" in url_lower:
+            pass  # hls/5 是 CCTV-5 的正确流
+        if "hls/15" in url_lower:
+            return None  # 错误分配到 CCTV-5 的 CCTV-15 源
     return channel_name
 
 
@@ -211,17 +221,21 @@ def test_source(url, timeout=5):
         })
         ctx = create_ssl_context()
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
-            # 读取前 4KB 验证是否为有效 M3U8
-            data = resp.read(4096)
+            # 读取前 16KB 验证是否为有效 M3U8（有些源响应较慢）
+            data = resp.read(16384)
             latency = int((time.time() - start) * 1000)
             content = data.decode("utf-8", errors="ignore")
-            if "#EXTM3U" in content or "#EXTINF" in content or "m3u8" in content.lower():
+            if "#EXTM3U" in content or "#EXTINF" in content or "m3u8" in content.lower() or "#EXT-X-TARGETDURATION" in content:
                 return (url, latency, "OK")
             return (url, latency, "INVALID_CONTENT")
     except urllib.error.HTTPError as e:
         return (url, int((time.time() - start) * 1000), f"HTTP_{e.code}")
     except urllib.error.URLError as e:
         return (url, int((time.time() - start) * 1000), f"URL_ERROR")
+    except ConnectionResetError:
+        return (url, 9999, "CONN_RESET")
+    except TimeoutError:
+        return (url, 9999, "TIMEOUT")
     except Exception as e:
         return (url, int((time.time() - start) * 1000), f"ERROR: {str(e)[:30]}")
 
@@ -300,13 +314,20 @@ def main():
     # ─── Step 2: 按频道分组 ───
     print("📊 Step 2/4: 按频道分组...")
     channels = {}
+    discarded = 0
     for name, url in unique_entries:
         normalized = normalize_channel_name(name)
         # 根据 URL 特征纠正频道分配（CCTV-5 vs CCTV-5+, CCTV-4 vs CCTV-4K 等）
         corrected = correct_channel_by_url(normalized, url)
+        if corrected is None:
+            discarded += 1
+            continue
         if corrected not in channels:
             channels[corrected] = []
         channels[corrected].append(url)
+
+    if discarded:
+        print(f"   丢弃 {discarded} 条明显错误的源")
 
     for ch in CHANNEL_ORDER:
         if ch in channels:
@@ -408,9 +429,10 @@ def main():
                 label += f"(备{i})"
 
             logo = get_channel_logo(name=ch)
-            num_id = ch.replace(" ", "").replace("-", "").replace("+", "PLUS")
+            # 生成干净的 tvg-id（从 logo URL 提取）
+            tvg_id = logo.split("/")[-1].replace(".png", "")
             m3u_lines.append(
-                f'#EXTINF:-1 tvg-id="{num_id}" tvg-name="{ch}" tvg-logo="{logo}" group-title="央视",{label}'
+                f'#EXTINF:-1 tvg-id="{tvg_id}" tvg-name="{ch}" tvg-logo="{logo}" group-title="央视",{label}'
             )
             m3u_lines.append(url)
 
