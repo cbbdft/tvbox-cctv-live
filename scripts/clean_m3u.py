@@ -46,7 +46,10 @@ def get_channel_logo(ch_name):
 
 
 def main():
-    m3u_path = "CCTV直播源.m3u"
+    # 从脚本所在目录推导 M3U 文件路径（与 validate_sources.py 保持一致）
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_dir = os.path.dirname(script_dir)
+    m3u_path = os.path.join(project_dir, "CCTV直播源.m3u")
 
     # 读取文件
     if not os.path.exists(m3u_path):
@@ -137,7 +140,7 @@ def main():
     print(f"✅ 清洗完成!")
     valid_channels = [ch for ch in channel_order if ch in channels and channels[ch]]
     print(f"   频道数: {len(valid_channels)}")
-    print(f"├─ 但源数: {total_sources}")
+    print(f"   总源数: {total_sources}")
     print(f"   文件: {m3u_path}")
 
 

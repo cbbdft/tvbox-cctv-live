@@ -34,6 +34,26 @@ jobs:
         run: |
           python scripts/validate_sources.py --timeout 5 --workers 30 --top-n 5
 
+      - name: 检查低源频道
+        id: check_health
+        run: |
+          # 解析验证报告，找出可用源少于 2 的频道
+          LOW_CHANNELS=""
+          while IFS='|' read -r ch total ok lat status; do
+            ch=$(echo "$ch" | xargs)
+            ok=$(echo "$ok" | xargs)
+            if [ -n "$ok" ] && [ "$ok" -lt 2 ] 2>/dev/null; then
+              LOW_CHANNELS="$LOW_CHANNELS $ch(${ok}源)"
+            fi
+          done < <(grep '|' 验证报告.md | grep 'CCTV' | head -19)
+          if [ -n "$LOW_CHANNELS" ]; then
+            echo "⚠️ 低源频道: $LOW_CHANNELS"
+            echo "low_channels=$LOW_CHANNELS" >> $GITHUB_OUTPUT
+          else
+            echo "✅ 所有频道至少有2个可用源"
+            echo "low_channels=" >> $GITHUB_OUTPUT
+          fi
+
       - name: 检查是否有更新
         id: check_changes
         run: |
@@ -56,8 +76,15 @@ jobs:
           git pull --rebase -X theirs origin master 2>/dev/null || git rebase --abort 2>/dev/null || true
           git push origin master 2>/dev/null || (git pull --rebase -X theirs origin master && git push origin master)
 
-      - name: 上传验证报告
+      - name: 清除 jsDelivr CDN 缓存
         if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          # 触发 jsDelivr 重新拉取最新文件（解决 CDN 缓存延迟）
+          curl -s -X PURGE "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u" || true
+          echo "🚀 jsDelivr CDN 缓存已清除"
+
+      - name: 上传验证报告
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: validation-report

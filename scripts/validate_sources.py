@@ -34,6 +34,10 @@ UPSTREAM_SOURCES = [
     "https://raw.githubusercontent.com/mytv-android/China-TV-Live-M3U8/main/iptv.m3u",
     "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
     "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
+    # 新增上游源（2026-06-22）
+    "https://raw.githubusercontent.com/BurningC4/Chinese-IPTV/master/tv-playlist.m3u",
+    "https://raw.githubusercontent.com/imDzy/iptv/master/cctv.m3u",
+    "https://raw.githubusercontent.com/xisuo666/IPTV/main/IPTV.m3u",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -74,6 +78,13 @@ CHANNEL_ORDER = [
 
 # 需要特殊标记的频道（体育类）
 SPORTS_CHANNELS = {"CCTV-5 体育", "CCTV-5+ 体育赛事"}
+
+# 时效性URL黑名单域名（这些URL带鉴权参数，短期可用但很快失效）
+EPHEMERAL_DOMAINS = [
+    "douyinliving.com",   # 抖音直播流（wsSecret/wsTime 参数时效性短）
+    "live.douyin.com",    # 抖音直播
+    "hls.douyin.com",     # 抖音 HLS
+]
 
 # 每个频道保留的最优源数量
 TOP_N = 5
@@ -176,12 +187,27 @@ def _num_to_channel(num_int):
     return channel_map.get(num_int, f"CCTV-{num_int}")
 
 
+def is_ephemeral_url(url):
+    """判断是否为时效性URL（带鉴权参数，短期可用但很快失效）"""
+    url_lower = url.lower()
+    for domain in EPHEMERAL_DOMAINS:
+        if domain in url_lower:
+            return True
+    return False
+
+
 def correct_channel_by_url(channel_name, url):
     """
     根据 URL 特征纠正频道分配。
     上游源可能把 CCTV-5+ 的源标记为 CCTV-5，或把 CCTV-4K 的源标记为 CCTV-4。
+    同时过滤时效性URL和错误分配。
     """
     url_lower = url.lower()
+
+    # 先过滤时效性URL
+    if is_ephemeral_url(url):
+        return None  # 抖音流等带鉴权参数，几小时后失效，不保留
+
     # CCTV-5 体育 vs CCTV-5+ 体育赛事
     if channel_name == "CCTV-5 体育" and ("cctv5p" in url_lower or "cctv5plus" in url_lower):
         return "CCTV-5+ 体育赛事"
@@ -192,16 +218,12 @@ def correct_channel_by_url(channel_name, url):
         return "CCTV-4K 超高清"
     if channel_name == "CCTV-4K 超高清" and ("cctv4hd" in url_lower or "cctv4/" in url_lower):
         return "CCTV-4 中文国际"
-    # CCTV-8 电视剧 vs CCTV-8K
+    # CCTV-8 电视剧 vs CCTV-8K（8K频道不在目标频道列表中）
     if channel_name == "CCTV-8 电视剧" and ("cctv8k" in url_lower):
-        return None  # 丢弃，不是有效频道
-    # 排除明显错误的频道分配：CCTV-5 的源 URL 指向其他频道
-    if channel_name == "CCTV-5 体育":
-        # hls/15 是 CCTV-15 的流，不是 CCTV-5
-        if "hls/15" in url_lower or "hls/5/" in url_lower:
-            pass  # hls/5 是 CCTV-5 的正确流
-        if "hls/15" in url_lower:
-            return None  # 错误分配到 CCTV-5 的 CCTV-15 源
+        return None
+    # CCTV-5 的源 URL 指向 CCTV-15（hls/15 是 CCTV-15 的流）
+    if channel_name == "CCTV-5 体育" and "hls/15" in url_lower:
+        return None  # 错误分配到 CCTV-5 的 CCTV-15 源
     return channel_name
 
 
@@ -315,26 +337,40 @@ def main():
     print("📊 Step 2/4: 按频道分组...")
     channels = {}
     discarded = 0
+    ephemeral_discarded = 0
     for name, url in unique_entries:
         normalized = normalize_channel_name(name)
         # 根据 URL 特征纠正频道分配（CCTV-5 vs CCTV-5+, CCTV-4 vs CCTV-4K 等）
+        # 同时过滤时效性URL（抖音流等带鉴权参数）
         corrected = correct_channel_by_url(normalized, url)
         if corrected is None:
-            discarded += 1
+            if is_ephemeral_url(url):
+                ephemeral_discarded += 1
+            else:
+                discarded += 1
             continue
         if corrected not in channels:
             channels[corrected] = []
-        channels[corrected].append(url)
+        # 同一频道内去重URL
+        if url not in channels[corrected]:
+            channels[corrected].append(url)
 
     if discarded:
         print(f"   丢弃 {discarded} 条明显错误的源")
+    if ephemeral_discarded:
+        print(f"   丢弃 {ephemeral_discarded} 条时效性源（抖音流等，鉴权参数短期有效）")
 
+    low_channels = []
     for ch in CHANNEL_ORDER:
         if ch in channels:
             print(f"   {ch}: {len(channels[ch])} 个源")
         else:
             print(f"   {ch}: ⚠ 无源!")
+            low_channels.append(ch)
             channels[ch] = []
+
+    if low_channels:
+        print(f"\n   ⚠️ 警告: {len(low_channels)} 个频道无源: {', '.join(low_channels)}")
 
     # ─── Step 3: 并发验证 ───
     print(f"\n🔍 Step 3/4: 并发验证源可用性 (超时 {args.timeout}s)...")
@@ -411,7 +447,8 @@ def main():
 
         if top_sources:
             best_lat = top_sources[0][1]
-            status_icon = "🟢" if len(ok_sources) >= 3 else ("🟡" if len(ok_sources) >= 1 else "🔴")
+            # 🟢 至少3个可用源 | 🟡 1-2个 | 🔴 0个
+            status_icon = "🟢" if len(ok_sources) >= 3 else ("🟡" if len(ok_sources) >= 2 else "🔴")
         else:
             best_lat = "-"
             status_icon = "🔴"
