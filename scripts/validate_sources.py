@@ -26,18 +26,20 @@ from datetime import datetime, timezone, timedelta
 
 # ─── 配置 ───────────────────────────────────────────────
 UPSTREAM_SOURCES = [
+    # 全球最大IPTV聚合项目（88K+ Stars，最稳定）
+    "https://iptv-org.github.io/iptv/countries/cn.m3u",
     # 央视专用源
     "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8",
-    "https://raw.githubusercontent.com/zhi35/iptv/main/cn_cctv.m3u8",
     # 全频道源（含央视）
     "https://raw.githubusercontent.com/cs3306/IPTV-Sources/main/data/output/iptv_collection.m3u",
-    "https://raw.githubusercontent.com/mytv-android/China-TV-Live-M3U8/main/iptv.m3u",
     "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
     "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
-    # 新增上游源（2026-06-22）
-    "https://raw.githubusercontent.com/BurningC4/Chinese-IPTV/master/tv-playlist.m3u",
-    "https://raw.githubusercontent.com/imDzy/iptv/master/cctv.m3u",
-    "https://raw.githubusercontent.com/xisuo666/IPTV/main/IPTV.m3u",
+    # 注: 已移除以下失效上游源（404）：
+    # - zhi35/iptv (cn_cctv.m3u8 已删除)
+    # - mytv-android/China-TV-Live-M3U8 (iptv.m3u CCTV条目为0)
+    # - BurningC4/Chinese-IPTV (tv-playlist.m3u 已删除)
+    # - imDzy/iptv (cctv.m3u 已删除)
+    # - xisuo666/IPTV (IPTV.m3u 已删除)
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -138,7 +140,10 @@ def parse_m3u(content):
                 if len(parts) > 1:
                     current_name = parts[1].strip()
         elif line and not line.startswith("#") and current_name:
-            entries.append((current_name, line))
+            # 只保留 HTTP/HTTPS 源，过滤 rtp://, rtsp://, udp:// 等组播协议
+            # （TVBox 在普通网络环境下无法播放组播流，且无法通过 HTTP 验证）
+            if line.startswith("http://") or line.startswith("https://"):
+                entries.append((current_name, line))
             current_name = None
 
     return entries
@@ -202,6 +207,22 @@ def is_ephemeral_url(url):
     return False
 
 
+def is_unsupported_url(url):
+    """
+    判断是否为当前网络环境不支持的URL：
+    - IPv6 组播地址（[2409:...] 等需要 IPv6 + 特定运营商，普通网络不可用）
+    - 运营商专网地址（chinamobile OTT 等，非公网可达）
+    """
+    url_lower = url.lower()
+    # IPv6 地址（以 [ 开头）
+    if "://[" in url_lower:
+        return True
+    # 中国移动 OTT 专网（非公网可达）
+    if "chinamobile.com" in url_lower and "otttv" in url_lower:
+        return True
+    return False
+
+
 def correct_channel_by_url(channel_name, url):
     """
     根据 URL 特征纠正频道分配。
@@ -213,6 +234,10 @@ def correct_channel_by_url(channel_name, url):
     # 先过滤时效性URL
     if is_ephemeral_url(url):
         return None  # 抖音流等带鉴权参数，几小时后失效，不保留
+
+    # 过滤不可达URL（IPv6/运营商专网）
+    if is_unsupported_url(url):
+        return None
 
     # CCTV-5 体育 vs CCTV-5+ 体育赛事
     if channel_name == "CCTV-5 体育" and ("cctv5p" in url_lower or "cctv5plus" in url_lower):
