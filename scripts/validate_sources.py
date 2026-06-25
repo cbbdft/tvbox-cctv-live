@@ -91,12 +91,18 @@ TOP_N = 5
 
 # ─── 工具函数 ────────────────────────────────────────────
 
-def create_ssl_context():
-    """创建不验证证书的 SSL 上下文（部分 IPTV 服务器证书有问题）"""
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    return ctx
+# 全局复用 SSL 上下文（避免每次请求都创建新的）
+_SSL_CONTEXT = None
+
+def get_ssl_context():
+    """获取全局 SSL 上下文（不验证证书，部分 IPTV 服务器证书有问题）"""
+    global _SSL_CONTEXT
+    if _SSL_CONTEXT is None:
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        _SSL_CONTEXT = ctx
+    return _SSL_CONTEXT
 
 
 def fetch_url(url, timeout=15):
@@ -105,7 +111,7 @@ def fetch_url(url, timeout=15):
         req = urllib.request.Request(url, headers={
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
         })
-        ctx = create_ssl_context()
+        ctx = get_ssl_context()
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
             return resp.read().decode("utf-8", errors="ignore")
     except Exception as e:
@@ -241,13 +247,14 @@ def test_source(url, timeout=5):
             "User-Agent": "Mozilla/5.0",
             "Accept": "*/*",
         })
-        ctx = create_ssl_context()
+        ctx = get_ssl_context()
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
             # 读取前 16KB 验证是否为有效 M3U8（有些源响应较慢）
             data = resp.read(16384)
             latency = int((time.time() - start) * 1000)
             content = data.decode("utf-8", errors="ignore")
-            if "#EXTM3U" in content or "#EXTINF" in content or "m3u8" in content.lower() or "#EXT-X-TARGETDURATION" in content:
+            # 严格验证：必须是 M3U8 结构，排除 HTML 错误页误判
+            if "#EXTM3U" in content or "#EXTINF" in content or "#EXT-X-TARGETDURATION" in content:
                 return (url, latency, "OK")
             return (url, latency, "INVALID_CONTENT")
     except urllib.error.HTTPError as e:
@@ -324,7 +331,8 @@ def main():
     # ─── Step 1.5: 从现有 M3U 文件补充缺失频道的源 ───
     print("📥 Step 1.5/4: 从现有文件补充缺失频道...")
     if os.path.exists(OUTPUT_M3U):
-        existing_content = open(OUTPUT_M3U, "r", encoding="utf-8").read()
+        with open(OUTPUT_M3U, "r", encoding="utf-8") as f:
+            existing_content = f.read()
         existing_entries = parse_m3u(existing_content)
         existing_cctv = [(n, u) for n, u in existing_entries if is_cctv_channel(n)]
         for name, url in existing_cctv:

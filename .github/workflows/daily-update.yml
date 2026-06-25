@@ -73,8 +73,8 @@ jobs:
           git add CCTV直播源.m3u 验证报告.md
           git commit -m "🔄 自动更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M') CST"
           # 拉取远程更新，冲突时使用本地版本(最新验证结果优先)
-          git pull --rebase -X theirs origin master 2>/dev/null || git rebase --abort 2>/dev/null || true
-          git push origin master 2>/dev/null || (git pull --rebase -X theirs origin master && git push origin master)
+          git pull --rebase -X theirs origin master || git rebase --abort || true
+          git push origin master || (git pull --rebase -X theirs origin master && git push origin master)
 
       - name: 清除 jsDelivr CDN 缓存
         if: steps.check_changes.outputs.changed == 'true'

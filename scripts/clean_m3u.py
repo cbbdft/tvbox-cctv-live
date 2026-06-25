@@ -14,7 +14,9 @@ import re
 import os
 from datetime import datetime, timezone, timedelta
 
-# 频道标准映射：tvg-name -> tvg-id
+# 频道映射与顺序应与 validate_sources.py 中 CHANNEL_ALIASES / CHANNEL_ORDER 保持一致
+# 如需修改频道列表，请同步更新两个文件
+
 CHANNEL_MAP = {
     "CCTV-1 综合": "CCTV1",
     "CCTV-2 财经": "CCTV2",
@@ -38,6 +40,15 @@ CHANNEL_MAP = {
 }
 
 SPORTS_CHANNELS = {"CCTV-5 体育", "CCTV-5+ 体育赛事"}
+
+# 频道顺序（与 validate_sources.py CHANNEL_ORDER 保持一致）
+CHANNEL_ORDER = [
+    "CCTV-1 综合", "CCTV-2 财经", "CCTV-3 综艺", "CCTV-4 中文国际",
+    "CCTV-5 体育", "CCTV-5+ 体育赛事", "CCTV-6 电影", "CCTV-7 国防军事",
+    "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-10 科教", "CCTV-11 戏曲",
+    "CCTV-12 社会与法", "CCTV-13 新闻", "CCTV-14 少儿", "CCTV-15 音乐",
+    "CCTV-16 奥林匹克", "CCTV-17 农业农村", "CCTV-4K 超高清",
+]
 
 
 def get_channel_logo(ch_name):
@@ -84,14 +95,6 @@ def main():
             current_name = None
 
     # 按频道顺序生成
-    channel_order = [
-        "CCTV-1 综合", "CCTV-2 财经", "CCTV-3 综艺", "CCTV-4 中文国际",
-        "CCTV-5 体育", "CCTV-5+ 体育赛事", "CCTV-6 电影", "CCTV-7 国防军事",
-        "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-10 科教", "CCTV-11 戏曲",
-        "CCTV-12 社会与法", "CCTV-13 新闻", "CCTV-14 少儿", "CCTV-15 音乐",
-        "CCTV-16 奥林匹克", "CCTV-17 农业农村", "CCTV-4K 超高清",
-    ]
-
     tz = timezone(timedelta(hours=8))
     now = datetime.now(tz)
 
@@ -108,7 +111,7 @@ def main():
     ]
 
     total_sources = 0
-    for ch in channel_order:
+    for ch in CHANNEL_ORDER:
         if ch not in channels or not channels[ch]:
             print(f"  ⚠️  频道缺失: {ch}")
             continue
@@ -138,7 +141,7 @@ def main():
         f.write("\n".join(output))
 
     print(f"✅ 清洗完成!")
-    valid_channels = [ch for ch in channel_order if ch in channels and channels[ch]]
+    valid_channels = [ch for ch in CHANNEL_ORDER if ch in channels and channels[ch]]
     print(f"   频道数: {len(valid_channels)}")
     print(f"   总源数: {total_sources}")
     print(f"   文件: {m3u_path}")

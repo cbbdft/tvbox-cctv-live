@@ -13,3 +13,7 @@ desktop.ini
 
 # WorkBuddy
 .workbuddy/
+
+# Python
+__pycache__/
+*.pyc
