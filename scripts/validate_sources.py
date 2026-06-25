@@ -253,11 +253,13 @@ def test_source(url, timeout=5):
     except urllib.error.HTTPError as e:
         return (url, int((time.time() - start) * 1000), f"HTTP_{e.code}")
     except urllib.error.URLError as e:
-        return (url, int((time.time() - start) * 1000), f"URL_ERROR")
-    except ConnectionResetError:
-        return (url, 9999, "CONN_RESET")
-    except TimeoutError:
-        return (url, 9999, "TIMEOUT")
+        # urllib 把底层 socket 异常包装为 URLError，不会单独抛出 ConnectionResetError/TimeoutError
+        reason = str(e.reason).lower()
+        if "timed out" in reason:
+            return (url, 9999, "TIMEOUT")
+        if "reset" in reason or "refused" in reason:
+            return (url, 9999, "CONN_RESET")
+        return (url, int((time.time() - start) * 1000), f"URL_ERROR({reason[:20]})")
     except Exception as e:
         return (url, int((time.time() - start) * 1000), f"ERROR: {str(e)[:30]}")
 
@@ -360,17 +362,28 @@ def main():
     if ephemeral_discarded:
         print(f"   丢弃 {ephemeral_discarded} 条时效性源（抖音流等，鉴权参数短期有效）")
 
-    low_channels = []
+    low_channels = []   # 0 个源的频道
+    weak_channels = []  # 仅 1 个源的频道
     for ch in CHANNEL_ORDER:
         if ch in channels:
-            print(f"   {ch}: {len(channels[ch])} 个源")
+            count = len(channels[ch])
+            if count == 0:
+                print(f"   {ch}: ⚠ 无源!")
+                low_channels.append(ch)
+            elif count == 1:
+                print(f"   {ch}: ⚡ 仅 1 个源（脆弱）")
+                weak_channels.append(ch)
+            else:
+                print(f"   {ch}: {count} 个源")
         else:
             print(f"   {ch}: ⚠ 无源!")
             low_channels.append(ch)
             channels[ch] = []
 
     if low_channels:
-        print(f"\n   ⚠️ 警告: {len(low_channels)} 个频道无源: {', '.join(low_channels)}")
+        print(f"\n   🔴 无源: {len(low_channels)} 个频道 ({', '.join(low_channels)})")
+    if weak_channels:
+        print(f"   🟡 脆弱: {len(weak_channels)} 个频道仅 1 源 ({', '.join(weak_channels)})")
 
     # ─── Step 3: 并发验证 ───
     print(f"\n🔍 Step 3/4: 并发验证源可用性 (超时 {args.timeout}s)...")
