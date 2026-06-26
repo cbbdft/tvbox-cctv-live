@@ -265,35 +265,100 @@ def is_cctv_channel(name):
 
 
 def test_source(url, timeout=5):
-    """测试单个直播源是否可用，返回 (url, latency_ms, status)"""
+    """
+    测试单个直播源是否可用，返回 (url, latency_ms, status, ts_speed_kbps)
+    
+    两阶段验证：
+    1. 拉取 M3U8 播放列表，验证是否为有效 M3U8 结构
+    2. 如果是媒体分片列表（非主播放列表），下载第一个 TS 分片测速
+       —— 只测 M3U8 延迟是不够的，有些源 M3U8 秒回但 TS 下载极慢，实际播放会卡顿
+    
+    ts_speed_kbps: TS 分片下载速度 (kbps)，无法测速时为 None
+    """
     start = time.time()
+    ctx = get_ssl_context()
+    
+    # ─── 阶段1: 验证 M3U8 播放列表 ───
     try:
         req = urllib.request.Request(url, headers={
             "User-Agent": "Mozilla/5.0",
             "Accept": "*/*",
         })
-        ctx = get_ssl_context()
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
-            # 读取前 16KB 验证是否为有效 M3U8（有些源响应较慢）
-            data = resp.read(16384)
-            latency = int((time.time() - start) * 1000)
+            data = resp.read(65536)  # 读取64KB，足以包含完整M3U8
+            m3u8_latency = int((time.time() - start) * 1000)
             content = data.decode("utf-8", errors="ignore")
-            # 严格验证：必须是 M3U8 结构，排除 HTML 错误页误判
-            if "#EXTM3U" in content or "#EXTINF" in content or "#EXT-X-TARGETDURATION" in content:
-                return (url, latency, "OK")
-            return (url, latency, "INVALID_CONTENT")
+            
+            if "#EXTM3U" not in content and "#EXTINF" not in content and "#EXT-X-TARGETDURATION" not in content:
+                return (url, m3u8_latency, "INVALID_CONTENT", None)
     except urllib.error.HTTPError as e:
-        return (url, int((time.time() - start) * 1000), f"HTTP_{e.code}")
+        return (url, int((time.time() - start) * 1000), f"HTTP_{e.code}", None)
     except urllib.error.URLError as e:
-        # urllib 把底层 socket 异常包装为 URLError，不会单独抛出 ConnectionResetError/TimeoutError
         reason = str(e.reason).lower()
         if "timed out" in reason:
-            return (url, 9999, "TIMEOUT")
+            return (url, 9999, "TIMEOUT", None)
         if "reset" in reason or "refused" in reason:
-            return (url, 9999, "CONN_RESET")
-        return (url, int((time.time() - start) * 1000), f"URL_ERROR({reason[:20]})")
+            return (url, 9999, "CONN_RESET", None)
+        return (url, int((time.time() - start) * 1000), f"URL_ERROR({reason[:20]})", None)
     except Exception as e:
-        return (url, int((time.time() - start) * 1000), f"ERROR: {str(e)[:30]}")
+        return (url, int((time.time() - start) * 1000), f"ERROR: {str(e)[:30]}", None)
+    
+    # ─── 阶段2: TS 分片下载测速 ───
+    # 如果是主播放列表（含 #EXT-X-STREAM-INF），跳过测速（需要再请求子流）
+    if "#EXT-X-STREAM-INF" in content:
+        # 主播放列表，M3U8 有效即可，不深入测子流
+        return (url, m3u8_latency, "OK", None)
+    
+    # 媒体分片列表，找第一个 TS 分片 URL
+    lines = content.strip().split("\n")
+    ts_url = None
+    for line in lines:
+        line = line.strip()
+        if line and not line.startswith("#") and line.startswith("http"):
+            ts_url = line
+            break
+        elif line and not line.startswith("#"):
+            # 可能是相对路径
+            if line.endswith(".ts") or ".ts?" in line:
+                # 相对于 M3U8 URL 的路径
+                base = url.rsplit("/", 1)[0]
+                ts_url = base + "/" + line
+                break
+    
+    if not ts_url:
+        # 没有 TS 分片，可能是不完整的 M3U8
+        return (url, m3u8_latency, "OK", None)
+    
+    # 下载 TS 分片测速（最多下载 10 秒 / 5MB）
+    ts_start = time.time()
+    try:
+        ts_req = urllib.request.Request(ts_url, headers={
+            "User-Agent": "Mozilla/5.0",
+            "Accept": "*/*",
+        })
+        with urllib.request.urlopen(ts_req, timeout=10, context=ctx) as ts_resp:
+            # 读取最多 5MB 用于测速
+            downloaded = 0
+            max_read = 5 * 1024 * 1024
+            while downloaded < max_read:
+                chunk = ts_resp.read(65536)
+                if not chunk:
+                    break
+                downloaded += len(chunk)
+            ts_time = time.time() - ts_start
+            
+            if ts_time > 0 and downloaded > 0:
+                speed_kbps = int((downloaded * 8) / ts_time / 1000)
+                # 综合延迟 = M3U8延迟 + TS下载预估延迟
+                # 如果 TS 速度 < 2000 kbps（2Mbps），标记为慢速源
+                if speed_kbps < 2000:
+                    return (url, m3u8_latency, f"SLOW_TS({speed_kbps}kbps)", speed_kbps)
+                return (url, m3u8_latency, "OK", speed_kbps)
+            else:
+                return (url, m3u8_latency, "OK", None)
+    except Exception:
+        # TS 下载失败，但 M3U8 本身是有效的，仍标记为 OK（只是无法测速）
+        return (url, m3u8_latency, "OK", None)
 
 
 def get_channel_logo(name):
@@ -425,7 +490,7 @@ def main():
         for url in channels.get(ch, []):
             all_urls.append((ch, url))
 
-    results = {}  # channel -> [(url, latency, status)]
+    results = {}  # channel -> [(url, latency, status, ts_speed_kbps)]
     for ch in CHANNEL_ORDER:
         results[ch] = []
 
@@ -441,15 +506,20 @@ def main():
         for future in concurrent.futures.as_completed(future_map):
             ch, url = future_map[future]
             try:
-                url_out, latency, status = future.result()
-                results[ch].append((url_out, latency, status))
+                url_out, latency, status, ts_speed = future.result()
+                results[ch].append((url_out, latency, status, ts_speed))
                 tested += 1
-                icon = "✓" if status == "OK" else "✗"
-                print(f"   [{tested:3d}/{total}] {icon} {ch}: {latency:4d}ms [{status}] {url[:70]}...")
+                if status == "OK":
+                    speed_str = f" {ts_speed}kbps" if ts_speed else ""
+                    print(f"   [{tested:3d}/{total}] ✓ {ch}: {latency:4d}ms{speed_str} {url[:60]}...")
+                elif status.startswith("SLOW_TS"):
+                    print(f"   [{tested:3d}/{total}] ⚠ {ch}: {latency:4d}ms [{status}] {url[:60]}...")
+                else:
+                    print(f"   [{tested:3d}/{total}] ✗ {ch}: {latency:4d}ms [{status}] {url[:60]}...")
             except Exception as e:
-                results[ch].append((url, 9999, f"EXCEPTION: {e}"))
+                results[ch].append((url, 9999, f"EXCEPTION: {e}", None))
                 tested += 1
-                print(f"   [{tested:3d}/{total}] ✗ {ch}: ERROR {url[:70]}...")
+                print(f"   [{tested:3d}/{total}] ✗ {ch}: ERROR {url[:60]}...")
 
     # ─── Step 4: 排序 & 生成 M3U ───
     print(f"\n📝 Step 4/4: 生成优化后的 M3U 文件...")
@@ -481,10 +551,13 @@ def main():
 
     for ch in CHANNEL_ORDER:
         ch_results = results.get(ch, [])
-        # 筛选可用的源
-        ok_sources = [(url, lat) for url, lat, status in ch_results if status == "OK"]
-        # 按延迟排序
-        ok_sources.sort(key=lambda x: x[1])
+        # 筛选可用的源（OK 状态），排除 SLOW_TS 慢速源
+        ok_sources = [(url, lat, ts_speed) for url, lat, status, ts_speed in ch_results if status == "OK"]
+        
+        # 排序策略：有 TS 测速的按速度降序排最前，无测速的按 M3U8 延迟升序排后面
+        # 这样最快的 TS 下载源排在第一位，TVBox 会优先使用它
+        ok_sources.sort(key=lambda x: (-(x[2] or 0), x[1]))
+        
         # 取 Top N
         top_sources = ok_sources[:args.top_n]
 
@@ -493,6 +566,9 @@ def main():
 
         if top_sources:
             best_lat = top_sources[0][1]
+            best_speed = top_sources[0][2]
+            if best_speed:
+                best_lat = f"{best_lat}ms/{best_speed}kbps"
             # 🟢 至少3个可用源 | 🟡 1-2个 | 🔴 0个
             status_icon = "🟢" if len(ok_sources) >= 3 else ("🟡" if len(ok_sources) >= 2 else "🔴")
         else:
@@ -500,11 +576,11 @@ def main():
             status_icon = "🔴"
 
         report_lines.append(
-            f"| {ch} | {len(ch_results)} | {len(ok_sources)} | {best_lat}ms | {status_icon} |"
+            f"| {ch} | {len(ch_results)} | {len(ok_sources)} | {best_lat} | {status_icon} |"
         )
 
         # 写入 M3U
-        for i, (url, latency) in enumerate(top_sources):
+        for i, (url, latency, ts_speed) in enumerate(top_sources):
             label = f"{ch}"
             if ch in SPORTS_CHANNELS:
                 label += " ⚽"
