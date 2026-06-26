@@ -356,9 +356,10 @@ def test_source(url, timeout=5):
                 return (url, m3u8_latency, "OK", speed_kbps)
             else:
                 return (url, m3u8_latency, "OK", None)
-    except Exception:
-        # TS 下载失败，但 M3U8 本身是有效的，仍标记为 OK（只是无法测速）
-        return (url, m3u8_latency, "OK", None)
+    except Exception as e:
+        # TS 下载失败 = 源不可用！不能标记为OK，否则TVBox会尝试这个死源然后超时卡顿
+        err_msg = str(e)[:30]
+        return (url, m3u8_latency, f"TS_FAIL({err_msg})", None)
 
 
 def get_channel_logo(name):
