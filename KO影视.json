@@ -154,14 +154,14 @@
   "lives": [
     {
       "name": "CCTV直播",
-      "type": "0",
-      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.txt",
+      "type": 0,
+      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/live.txt",
       "epg": "https://epg.pw/test_channel_page.html"
     },
     {
       "name": "CCTV直播(M3U)",
-      "type": "0",
-      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u",
+      "type": 1,
+      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/live.m3u",
       "epg": "https://epg.pw/test_channel_page.html"
     }
   ],
