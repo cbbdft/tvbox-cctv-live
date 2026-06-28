@@ -34,6 +34,10 @@ jobs:
         run: |
           python scripts/validate_sources.py --timeout 5 --workers 30 --top-n 5
 
+      - name: 生成多格式播放列表
+        run: |
+          python generate_multi_format.py
+
       - name: 检查低源频道
         id: check_health
         run: |
@@ -70,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CCTV直播源.m3u 验证报告.md
+          git add CCTV直播源.m3u 验证报告.md CCTV直播源.txt "KO影视.txt" CCTV直播源.json tvbox.json 订阅地址.md
           git commit -m "🔄 自动更新: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M') CST"
           # 拉取远程更新，冲突时使用本地版本(最新验证结果优先)
           git pull --rebase -X theirs origin master || git rebase --abort || true
