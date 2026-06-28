@@ -1,6 +1,6 @@
-# 📺 CCTV 全频道直播源 · 多客户端支持
+# 📺 CCTV 直播源 + 影视点播 · 多客户端支持
 
-> 🔄 **每天自动更新** | ✅ **源可用性验证** | 🚀 **全球 CDN 加速** | 📱 **多格式支持**
+> 🔄 **每天自动更新** | ✅ **源可用性验证** | 🚀 **全球 CDN 加速** | 📱 **多客户端支持**
 
 [![每日自动更新](https://github.com/cbbdft/tvbox-cctv-live/actions/workflows/daily-update.yml/badge.svg)](https://github.com/cbbdft/tvbox-cctv-live/actions/workflows/daily-update.yml)
 
@@ -8,39 +8,82 @@
 
 ## ⚡ 快速使用
 
-### 各客户端订阅地址
+### KO影视（主力）— JSON 配置（点播+直播一体）
 
-| 适用客户端 | 格式 | 订阅地址 |
-|-----------|------|---------|
-| **TVBox** / Televizo / IPTV Smarters / TiviMate / Kodi | M3U | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u` |
-| **KO影视** / 简单播放器 | TXT | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.txt` |
-| **KO影视** (带分组) | TXT | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/KO影视.txt` |
-| 自定义客户端 / 开发者 | JSON | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.json` |
-| TVBox 接口配置 | JSON | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/tvbox.json` |
+```
+https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/KO影视.json
+```
 
-> 每个频道内置多个源，一个超时自动切下一个，无需手动配置备用。
+> 包含15个点播源（电影/电视剧/综艺/动漫）+ CCTV直播 + 解析器，一个地址搞定。
+
+### TVBox（备用）— M3U 直播
+
+```
+https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u
+```
 
 ---
 
-## 📱 各客户端配置方法
+## 📋 全部订阅地址
 
-### TVBox
-设置 → 直播 → 添加订阅 → 粘贴 M3U 地址
+| 客户端 | 格式 | 订阅地址 |
+|--------|------|---------|
+| **KO影视** (takagen99/Box) | JSON | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/KO影视.json` |
+| **TVBox** / Televizo / TiviMate / Kodi | M3U | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u` |
+| **KO影视** (仅直播) | TXT | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/KO影视.txt` |
+| 简单播放器 | TXT | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.txt` |
+| 开发者/自定义 | JSON | `https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.json` |
 
-### Televizo
+---
+
+## 📱 配置方法
+
+### KO影视（主力）
+设置 → 配置地址 → 粘贴 `KO影视.json` 的地址 → 确认
+
+> JSON配置包含点播源+直播源+解析器，一次导入全部可用。
+
+### TVBox（备用）
+设置 → 配置地址 → 粘贴 M3U 地址
+
+### Televizo / TiviMate / IPTV Smarters
 设置 → 播放列表 → 添加 → 粘贴 M3U 地址
 
-### KO影视
-设置 → 直播源 → 导入 → 粘贴 TXT 地址
+---
 
-### IPTV Smarters Pro
-Settings → Playlists → Add → 粘贴 M3U 地址
+## 🎬 KO影视 JSON 配置说明
 
-### TiviMate
-设置 → 播放列表 → 添加 → 粘贴 M3U 地址
+KO影视（基于 takagen99/Box）使用 JSON 配置文件，结构如下：
 
-### Kodi (PVR IPTV Simple)
-设置 → PVR → IPTV Simple Client → Remote Path → M3U URL
+| 模块 | 说明 | 数量 |
+|------|------|------|
+| **sites** (点播源) | 苹果CMS采集站，via csp_AppYsV2 | 15个 |
+| **lives** (直播源) | CCTV全频道直播 | 2个( TXT + M3U ) |
+| **parses** (解析器) | 视频解析接口 | 3个 |
+| **flags** | VIP解析标识 | 9个平台 |
+| **ijk** | 播放器解码配置 | 软解码+硬解码 |
+| **ads** | 广告拦截 | 5个域名 |
+| **rules** | 嗅探规则 | m3u8/mp4等 |
+
+### 点播源列表
+
+| 采集站 | API地址 |
+|--------|---------|
+| 黑木耳 | heimuer.tv |
+| 暴风 | bfzyapi.com |
+| 量子 | cj.lziapi.com |
+| 索尼 | suoniapi.com |
+| 闪电 | sdzyapi.com |
+| 红牛 | hongniuzy2.com |
+| 豪华 | hhzyapi.com |
+| 极速 | jszyapi.com |
+| 非凡 | cj.ffzyapi.com |
+| 360资源 | 360zy.com |
+| 飞速 | feisuzyapi.com |
+| 卧龙 | wolongzyw.com |
+| U酷 | ukuapi.com |
+| 熊掌 | xzcjz.com |
+| 樱花 | apiyhzy.com |
 
 ---
 
@@ -63,18 +106,20 @@ Settings → Playlists → Add → 粘贴 M3U 地址
 
 ## 🌐 自动更新
 
-GitHub Actions 每天 4 次自动运行（06:00 / 12:00 / 18:00 / 23:00 北京时间），从多个上游源拉取、验证可用性（含TS分片下载测速）、按速度排序，每个频道保留最快的 5 个源，失效的自动淘汰。每次更新自动生成所有格式的播放列表。
+GitHub Actions 每天 4 次自动运行（06:00 / 12:00 / 18:00 / 23:00 北京时间），从多个上游源拉取、验证可用性（含TS分片下载测速）、按速度排序，失效的自动淘汰。
 
 ---
 
 ## 📊 验证报告
 
-每次自动更新后，可在 [验证报告.md](./验证报告.md) 查看各频道的源可用性详情。详细订阅地址见 [订阅地址.md](./订阅地址.md)。
+每次自动更新后，可在 [验证报告.md](./验证报告.md) 查看各频道的源可用性详情。
 
 ---
 
 ## ⚠️ 免责声明
 
-- 直播源来自公开网络，仅供学习研究使用
+- 所有源来自公开网络，仅供学习研究使用
+- 软件基于 takagen99/Box 开源库，只提供聚合展示功能
+- 软件不参与任何制作、上传、储存、下载等内容
+- 请遵守当地法律法规，于安装后24小时内删除
 - 源的有效性取决于第三方服务器状态
-- 请遵守当地法律法规
