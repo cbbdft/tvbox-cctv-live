@@ -1,0 +1,246 @@
+{
+  "sites": [
+    {
+      "key": "csp_AppYsV2_heimuer",
+      "name": "黑木耳",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://www.heimuer.tv/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_bf",
+      "name": "暴风",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://bfzyapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_lz",
+      "name": "量子",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://cj.lziapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_sn",
+      "name": "索尼",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://suoniapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_sd",
+      "name": "闪电",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "http://sdzyapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_hn",
+      "name": "红牛",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://www.hongniuzy2.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_hh",
+      "name": "豪华",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://hhzyapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_js",
+      "name": "极速",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://jszyapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_ff",
+      "name": "非凡",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "http://cj.ffzyapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_360",
+      "name": "360资源",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://360zy.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_fs",
+      "name": "飞速",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://www.feisuzyapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_wl",
+      "name": "卧龙",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://collect.wolongzyw.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_uk",
+      "name": "U酷",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://api.ukuapi.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_xz",
+      "name": "熊掌",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://xzcjz.com/api.php/provide/vod"
+    },
+    {
+      "key": "csp_AppYsV2_yh",
+      "name": "樱花",
+      "type": 3,
+      "api": "csp_AppYsV2",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "ext": "https://m3u8.apiyhzy.com/api.php/provide/vod"
+    }
+  ],
+  "lives": [
+    {
+      "name": "CCTV直播",
+      "type": "0",
+      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.txt",
+      "epg": "https://epg.pw/test_channel_page.html"
+    },
+    {
+      "name": "CCTV直播(M3U)",
+      "type": "0",
+      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/CCTV直播源.m3u",
+      "epg": "https://epg.pw/test_channel_page.html"
+    }
+  ],
+  "parses": [
+    {
+      "name": "JSON解析",
+      "type": 0,
+      "url": "https://jx.jsonplayer.com/player/?url="
+    },
+    {
+      "name": "聚合解析",
+      "type": 0,
+      "url": "https://jx.xmflv.com/?url="
+    },
+    {
+      "name": "CK解析",
+      "type": 0,
+      "url": "https://www.ckplayer.vip/jiexi/?url="
+    }
+  ],
+  "flags": [
+    "youku",
+    "qq",
+    "iqiyi",
+    "qiyi",
+    "letv",
+    "sohu",
+    "tudou",
+    "mgtv",
+    "bilibili"
+  ],
+  "ijk": [
+    {
+      "group": "软解码",
+      "options": [
+        {"name": "mediacodec", "category": 4, "value": "0"},
+        {"name": "opensles", "category": 4, "value": "0"},
+        {"name": "overlay-format", "category": 4, "value": "842225234"},
+        {"name": "framedrop", "category": 4, "value": "1"},
+        {"name": "soundtouch", "category": 4, "value": "1"},
+        {"name": "start-on-prepared", "category": 4, "value": "1"},
+        {"name": "http-detect-range-support", "category": 4, "value": "0"},
+        {"name": "skip_loop_filter", "category": 2, "value": "48"},
+        {"name": "rtsp_transport", "category": 1, "value": "tcp"},
+        {"name": "rtsp_flags", "category": 1, "value": "prefer_tcp"},
+        {"name": "buffer_size", "category": 1, "value": "4194304"},
+        {"name": "infbuf", "category": 1, "value": "1"},
+        {"name": "analyzemaxduration", "category": 1, "value": "100"},
+        {"name": "probesize", "category": 1, "value": "10240"},
+        {"name": "analyzeduration", "category": 1, "value": "1000"}
+      ]
+    },
+    {
+      "group": "硬解码",
+      "options": [
+        {"name": "mediacodec", "category": 4, "value": "1"},
+        {"name": "mediacodec-hevc", "category": 4, "value": "1"},
+        {"name": "mediacodec-auto-rotate", "category": 4, "value": "1"},
+        {"name": "mediacodec-handle-resolution-change", "category": 4, "value": "1"},
+        {"name": "skip_loop_filter", "category": 2, "value": "48"},
+        {"name": "rtsp_transport", "category": 1, "value": "tcp"},
+        {"name": "rtsp_flags", "category": 1, "value": "prefer_tcp"}
+      ]
+    }
+  ],
+  "ads": [
+    "ad.example.com",
+    "*.doubleclick.net",
+    "*.googleadservices.com",
+    "pos.baidu.com",
+    "adm.aliyun.com"
+  ],
+  "rules": [
+    {
+      "host": ".*",
+      "rule": [
+        "http((?!http).){12,}?\\.(m3u8|mp4|flv|avi|mkv|rmvb|wmv|mpg|mpeg)\\?.*",
+        "http((?!http).){12,}\\.(m3u8|mp4|flv|avi|mkv|rmvb|wmv|mpg|mpeg)$"
+      ]
+    }
+  ]
+}
