@@ -1,0 +1,20 @@
+{
+  "lives": [
+    {
+      "name": "CCTV直播",
+      "type": 0,
+      "url": "https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/live.txt",
+      "playerType": 2,
+      "epg": "http://epg.51zmt.top:8000/api/diyp/?ch={name}&date={date}",
+      "logo": "https://epg.v1.mk/logo/{name}.png"
+    },
+    {
+      "name": "范明明综合",
+      "type": 0,
+      "url": "https://live.fanmingming.com/tv/m3u/ipv6.m3u",
+      "playerType": 2,
+      "epg": "http://epg.51zmt.top:8000/api/diyp/?ch={name}&date={date}",
+      "logo": "https://epg.v1.mk/logo/{name}.png"
+    }
+  ]
+}
