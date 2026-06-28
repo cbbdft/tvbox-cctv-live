@@ -1,0 +1,86 @@
+# KO影视完整配置 - 直播+点播
+# 更新时间: 2026-06-28 18:35 CST
+# 主力: KO影视 | 备用: TVBox
+# 订阅地址(jsDelivr CDN): https://cdn.jsdelivr.net/gh/cbbdft/tvbox-cctv-live@master/KO影视完整配置.txt
+
+# ═══════════════════════════════════════════
+# 一、直播源（CCTV + 卫视）
+# ═══════════════════════════════════════════
+
+央视频道,#genre#
+CCTV-1 综合,http://69.30.245.50/live/cctv1.m3u8
+CCTV-2 财经,http://121.57.88.206:898/hls/2/index.m3u8
+CCTV-3 综艺,http://1.24.39.180:9003/hls/3/index.m3u8
+CCTV-4 中文国际,http://1.24.39.180:9003/hls/4/index.m3u8
+CCTV-5 体育,http://1.24.39.180:9003/hls/5/index.m3u8
+CCTV-5+ 体育赛事,http://112.123.243.37:50085/tsfile/live/0006_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-6 电影,http://69.30.245.50/live/cctv6.m3u8
+CCTV-7 国防军事,http://1.24.39.180:9003/hls/7/index.m3u8
+CCTV-8 电视剧,http://1.24.39.180:9003/hls/8/index.m3u8
+CCTV-9 纪录,http://222.223.41.27:8888/hls/9/index.m3u8
+CCTV-10 科教,http://1.24.39.180:9003/hls/10/index.m3u8
+CCTV-11 戏曲,http://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL1.smil/chunklist_w744036192_b1000000.m3u8
+CCTV-12 社会与法,http://74.91.26.218:82/live/cctv12hd.m3u8
+CCTV-13 新闻,https://event.pull.hebtv.com/jishi/cp1.m3u8
+CCTV-14 少儿,https://event.pull.hebtv.com/jishi/cp2.m3u8
+CCTV-15 音乐,http://1.24.39.180:9003/hls/15/index.m3u8
+CCTV-16 奥林匹克,http://121.57.88.206:898/hls/16/index.m3u8
+CCTV-17 农业农村,http://121.57.88.206:898/hls/17/index.m3u8
+CCTV-4K 超高清,http://198.204.240.250:82/live/cctv4k.m3u8
+
+卫视,#genre#
+湖南卫视,http://1.24.39.180:9003/hls/30/index.m3u8
+浙江卫视,http://1.24.39.180:9003/hls/31/index.m3u8
+东方卫视,http://1.24.39.180:9003/hls/32/index.m3u8
+江苏卫视,http://1.24.39.180:9003/hls/33/index.m3u8
+北京卫视,http://1.24.39.180:9003/hls/34/index.m3u8
+广东卫视,http://1.24.39.180:9003/hls/35/index.m3u8
+深圳卫视,http://1.24.39.180:9003/hls/36/index.m3u8
+山东卫视,http://1.24.39.180:9003/hls/37/index.m3u8
+河南卫视,http://1.24.39.180:9003/hls/38/index.m3u8
+湖北卫视,http://1.24.39.180:9003/hls/39/index.m3u8
+四川卫视,http://1.24.39.180:9003/hls/40/index.m3u8
+辽宁卫视,http://1.24.39.180:9003/hls/41/index.m3u8
+江西卫视,http://1.24.39.180:9003/hls/42/index.m3u8
+安徽卫视,http://1.24.39.180:9003/hls/43/index.m3u8
+河北卫视,http://1.24.39.180:9003/hls/44/index.m3u8
+黑龙江卫视,http://1.24.39.180:9003/hls/45/index.m3u8
+吉林卫视,http://1.24.39.180:9003/hls/46/index.m3u8
+天津卫视,http://1.24.39.180:9003/hls/47/index.m3u8
+重庆卫视,http://1.24.39.180:9003/hls/48/index.m3u8
+贵州卫视,http://1.24.39.180:9003/hls/49/index.m3u8
+云南卫视,http://1.24.39.180:9003/hls/50/index.m3u8
+广西卫视,http://1.24.39.180:9003/hls/51/index.m3u8
+福建卫视,http://1.24.39.180:9003/hls/52/index.m3u8
+海南卫视,http://1.24.39.180:9003/hls/53/index.m3u8
+新疆卫视,http://1.24.39.180:9003/hls/54/index.m3u8
+内蒙古卫视,http://1.24.39.180:9003/hls/55/index.m3u8
+宁夏卫视,http://1.24.39.180:9003/hls/56/index.m3u8
+甘肃卫视,http://1.24.39.180:9003/hls/57/index.m3u8
+青海卫视,http://1.24.39.180:9003/hls/58/index.m3u8
+西藏卫视,http://1.24.39.180:9003/hls/59/index.m3u8
+
+# ═══════════════════════════════════════════
+# 二、点播源（影视采集站 - 已验证可用）
+# ═══════════════════════════════════════════
+
+点播源,#genre#
+暴风|点播,https://bfzyapi.com/api.php/provide/vod
+红牛|点播,https://www.hongniuzy2.com/api.php/provide/vod
+量子|点播,https://cj.lziapi.com/api.php/provide/vod
+360资源|点播,https://360zy.com/api.php/provide/vod
+非凡|点播,http://cj.ffzyapi.com/api.php/provide/vod
+闪电|点播,http://sdzyapi.com/api.php/provide/vod
+豪华|点播,https://hhzyapi.com/api.php/provide/vod
+极速|点播,https://jszyapi.com/api.php/provide/vod
+索尼|点播,https://suoniapi.com/api.php/provide/vod
+U酷|点播,https://api.ukuapi.com/api.php/provide/vod
+
+# ═══════════════════════════════════════════
+# 三、TVBox/KO影视多仓接口（备用）
+# ═══════════════════════════════════════════
+
+多仓接口,#genre#
+飞龙VIP源,https://gitee.com/tvkj/fl/raw/main/svip.json
+运输车多仓,https://weixine.net/api.json
+巧儿源,http://pandown.pro/tvbox/tvbox.json
