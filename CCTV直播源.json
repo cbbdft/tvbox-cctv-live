@@ -1,8 +1,8 @@
 {
   "name": "CCTV 全频道直播源",
-  "update_time": "2026-06-29 19:53:23 CST",
+  "update_time": "2026-06-29 22:00:49 CST",
   "channel_count": 19,
-  "source_count": 68,
+  "source_count": 66,
   "channels": [
     {
       "name": "CCTV-1 综合",
@@ -20,15 +20,15 @@
         },
         {
           "label": "CCTV-1 综合(备2)",
-          "url": "http://112.123.243.37:50085/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&authid=0"
+          "url": "http://36.136.38.87:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0"
         },
         {
           "label": "CCTV-1 综合(备3)",
-          "url": "http://60.10.139.113:8801/hls/1/index.m3u8"
+          "url": "http://112.123.243.37:50085/tsfile/live/0001_1.m3u8?key=txiptv&playlive=0&authid=0"
         },
         {
           "label": "CCTV-1 综合(备4)",
-          "url": "http://play.kankanlive.com/live/1698234869325962.m3u8"
+          "url": "http://60.10.139.113:8801/hls/1/index.m3u8"
         }
       ]
     },
@@ -44,7 +44,7 @@
         },
         {
           "label": "CCTV-2 财经(备1)",
-          "url": "http://120.202.94.181:9446/tsfile/live/0002_1.m3u8?key=txiptv"
+          "url": "http://36.136.38.87:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0"
         },
         {
           "label": "CCTV-2 财经(备2)",
@@ -52,7 +52,7 @@
         },
         {
           "label": "CCTV-2 财经(备3)",
-          "url": "http://36.136.38.87:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0"
+          "url": "http://120.202.94.181:9446/tsfile/live/0002_1.m3u8?key=txiptv"
         }
       ]
     },
@@ -64,19 +64,23 @@
       "urls": [
         {
           "label": "CCTV-3 综艺",
-          "url": "http://222.223.41.27:8888/hls/3/index.m3u8"
+          "url": "http://74.91.26.218:82/live/cctv3hd.m3u8"
         },
         {
           "label": "CCTV-3 综艺(备1)",
-          "url": "http://112.123.243.37:50085/tsfile/live/0003_1.m3u8?key=txiptv&playlive=0&authid=0"
+          "url": "http://222.223.41.27:8888/hls/3/index.m3u8"
         },
         {
           "label": "CCTV-3 综艺(备2)",
-          "url": "http://60.10.139.113:8801/hls/3/index.m3u8"
+          "url": "http://120.198.95.220:9901/tsfile/live/1017_1.m3u8?key=txiptv&playlive=1&down=1"
         },
         {
           "label": "CCTV-3 综艺(备3)",
-          "url": "http://120.198.95.220:9901/tsfile/live/1017_1.m3u8?key=txiptv&playlive=1&down=1"
+          "url": "http://112.123.243.37:50085/tsfile/live/0003_1.m3u8?key=txiptv&playlive=0&authid=0"
+        },
+        {
+          "label": "CCTV-3 综艺(备4)",
+          "url": "http://60.10.139.113:8801/hls/3/index.m3u8"
         }
       ]
     },
@@ -88,11 +92,11 @@
       "urls": [
         {
           "label": "CCTV-4 中文国际",
-          "url": "http://222.223.41.27:8888/hls/4/index.m3u8"
+          "url": "http://36.136.38.87:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0"
         },
         {
           "label": "CCTV-4 中文国际(备1)",
-          "url": "http://120.202.94.181:9446/tsfile/live/0004_1.m3u8?key=txiptv"
+          "url": "http://120.198.95.220:9901/tsfile/live/1018_1.m3u8?key=txiptv&playlive=1&down=1"
         },
         {
           "label": "CCTV-4 中文国际(备2)",
@@ -100,11 +104,7 @@
         },
         {
           "label": "CCTV-4 中文国际(备3)",
-          "url": "http://221.226.51.220:50081/newlive/live/hls/4/live.m3u8"
-        },
-        {
-          "label": "CCTV-4 中文国际(备4)",
-          "url": "http://120.198.95.220:9901/tsfile/live/1018_1.m3u8?key=txiptv&playlive=1&down=1"
+          "url": "http://120.202.94.181:9446/tsfile/live/0004_1.m3u8?key=txiptv"
         }
       ]
     },
@@ -116,15 +116,15 @@
       "urls": [
         {
           "label": "CCTV-5 体育 ⚽",
-          "url": "http://60.10.139.113:8801/hls/5/index.m3u8"
-        },
-        {
-          "label": "CCTV-5 体育 ⚽(备1)",
           "url": "http://222.223.41.27:8888/hls/5/index.m3u8"
         },
         {
-          "label": "CCTV-5 体育 ⚽(备2)",
+          "label": "CCTV-5 体育 ⚽(备1)",
           "url": "http://153.0.171.163:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0"
+        },
+        {
+          "label": "CCTV-5 体育 ⚽(备2)",
+          "url": "http://221.226.51.220:50081/newlive/live/hls/5/live.m3u8"
         }
       ]
     },
@@ -136,11 +136,11 @@
       "urls": [
         {
           "label": "CCTV-5+ 体育赛事 ⚽",
-          "url": "http://124.228.160.210:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0"
+          "url": "http://112.123.243.37:50085/tsfile/live/0006_1.m3u8?key=txiptv&playlive=0&authid=0"
         },
         {
           "label": "CCTV-5+ 体育赛事 ⚽(备1)",
-          "url": "http://112.123.243.37:50085/tsfile/live/0006_1.m3u8?key=txiptv&playlive=0&authid=0"
+          "url": "http://124.228.160.210:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0"
         },
         {
           "label": "CCTV-5+ 体育赛事 ⚽(备2)",
@@ -160,15 +160,11 @@
         },
         {
           "label": "CCTV-6 电影(备1)",
-          "url": "http://121.57.88.206:898/hls/6/index.m3u8"
+          "url": "http://153.0.171.163:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0"
         },
         {
           "label": "CCTV-6 电影(备2)",
           "url": "http://60.10.139.113:8801/hls/6/index.m3u8"
-        },
-        {
-          "label": "CCTV-6 电影(备3)",
-          "url": "http://153.0.171.163:9901/tsfile/live/0006_1.m3u8?key=txiptv&playlive=1&authid=0"
         }
       ]
     },
@@ -185,10 +181,6 @@
         {
           "label": "CCTV-7 国防军事(备1)",
           "url": "http://222.223.41.27:8888/hls/7/index.m3u8"
-        },
-        {
-          "label": "CCTV-7 国防军事(备2)",
-          "url": "http://60.10.139.113:8801/hls/7/index.m3u8"
         }
       ]
     },
@@ -200,11 +192,11 @@
       "urls": [
         {
           "label": "CCTV-8 电视剧",
-          "url": "http://222.223.41.27:8888/hls/8/index.m3u8"
+          "url": "http://112.123.243.37:50085/tsfile/live/0009_1.m3u8?key=txiptv&playlive=0&authid=0"
         },
         {
           "label": "CCTV-8 电视剧(备1)",
-          "url": "http://112.123.243.37:50085/tsfile/live/0009_1.m3u8?key=txiptv&playlive=0&authid=0"
+          "url": "http://222.223.41.27:8888/hls/8/index.m3u8"
         },
         {
           "label": "CCTV-8 电视剧(备2)",
@@ -224,7 +216,7 @@
         },
         {
           "label": "CCTV-9 纪录(备1)",
-          "url": "http://60.10.139.113:8801/hls/9/index.m3u8"
+          "url": "http://120.198.95.220:9901/tsfile/live/1024_1.m3u8?key=txiptv&playlive=1&down=1"
         },
         {
           "label": "CCTV-9 纪录(备2)",
@@ -232,11 +224,11 @@
         },
         {
           "label": "CCTV-9 纪录(备3)",
-          "url": "https://v4-e6b1c5baf4e240fe63adbf68dda23435.livehwc4.com/play.kankanlive.com/live/1698423397390920.m3u8?sub_m3u8=true&edge_slice=true&user_session_id=73b69ea221be0bd00d6e465f10653101"
+          "url": "https://xykt-fix.github.io/Y77.m3u8"
         },
         {
           "label": "CCTV-9 纪录(备4)",
-          "url": "https://xykt-fix.github.io/Y77.m3u8"
+          "url": "https://v4-e6b1c5baf4e240fe63adbf68dda23435.livehwc4.com/play.kankanlive.com/live/1698423397390920.m3u8?sub_m3u8=true&edge_slice=true&user_session_id=73b69ea221be0bd00d6e465f10653101"
         }
       ]
     },
@@ -248,15 +240,15 @@
       "urls": [
         {
           "label": "CCTV-10 科教",
-          "url": "http://60.10.139.113:8801/hls/10/index.m3u8"
+          "url": "https://hwapi.yntv.net/ew265l/z1z6s5.m3u8"
         },
         {
           "label": "CCTV-10 科教(备1)",
-          "url": "http://124.228.160.210:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0"
+          "url": "http://60.10.139.113:8801/hls/10/index.m3u8"
         },
         {
           "label": "CCTV-10 科教(备2)",
-          "url": "https://hwapi.yntv.net/ew265l/z1z6s5.m3u8"
+          "url": "http://124.228.160.210:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0"
         }
       ]
     },
@@ -272,7 +264,7 @@
         },
         {
           "label": "CCTV-11 戏曲(备1)",
-          "url": "https://xykt-fix.github.io/play/a02b/index.m3u8"
+          "url": "http://222.223.41.27:8888/hls/11/index.m3u8"
         },
         {
           "label": "CCTV-11 戏曲(备2)",
@@ -281,6 +273,10 @@
         {
           "label": "CCTV-11 戏曲(备3)",
           "url": "http://153.0.171.163:9901/tsfile/live/1010_1.m3u8?key=txiptv&playlive=1&authid=0"
+        },
+        {
+          "label": "CCTV-11 戏曲(备4)",
+          "url": "https://xykt-fix.github.io/play/a02b/index.m3u8"
         }
       ]
     },
@@ -300,11 +296,11 @@
         },
         {
           "label": "CCTV-12 社会与法(备2)",
-          "url": "http://124.228.160.210:9901/tsfile/live/0012_2.m3u8?key=txiptv&playlive=1&authid=0"
+          "url": "http://60.10.139.113:8801/hls/11/index.m3u8"
         },
         {
           "label": "CCTV-12 社会与法(备3)",
-          "url": "http://60.10.139.113:8801/hls/11/index.m3u8"
+          "url": "http://124.228.160.210:9901/tsfile/live/0012_2.m3u8?key=txiptv&playlive=1&authid=0"
         }
       ]
     },
@@ -320,15 +316,19 @@
         },
         {
           "label": "CCTV-13 新闻(备1)",
-          "url": "http://116.128.243.121:85/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0"
+          "url": "http://222.223.41.27:8888/hls/13/index.m3u8"
         },
         {
           "label": "CCTV-13 新闻(备2)",
-          "url": "http://153.0.171.163:9901/tsfile/live/1012_1.m3u8?key=txiptv&playlive=1&authid=0"
+          "url": "http://116.128.243.121:85/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0"
         },
         {
           "label": "CCTV-13 新闻(备3)",
           "url": "http://60.10.139.113:8801/hls/12/index.m3u8"
+        },
+        {
+          "label": "CCTV-13 新闻(备4)",
+          "url": "http://153.0.171.163:9901/tsfile/live/1012_1.m3u8?key=txiptv&playlive=1&authid=0"
         }
       ]
     },
@@ -348,10 +348,6 @@
         },
         {
           "label": "CCTV-14 少儿(备2)",
-          "url": "http://120.202.94.181:9446/tsfile/live/0014_1.m3u8?key=txiptv"
-        },
-        {
-          "label": "CCTV-14 少儿(备3)",
           "url": "http://153.0.171.163:9901/tsfile/live/1013_1.m3u8?key=txiptv&playlive=1&authid=0"
         }
       ]
@@ -364,7 +360,7 @@
       "urls": [
         {
           "label": "CCTV-15 音乐",
-          "url": "https://xykt-fix.github.io/play/a02e/index.m3u8"
+          "url": "http://60.10.139.113:8801/hls/97/index.m3u8"
         },
         {
           "label": "CCTV-15 音乐(备1)",
@@ -372,11 +368,11 @@
         },
         {
           "label": "CCTV-15 音乐(备2)",
-          "url": "http://124.228.160.210:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0"
+          "url": "https://xykt-fix.github.io/play/a02e/index.m3u8"
         },
         {
           "label": "CCTV-15 音乐(备3)",
-          "url": "http://60.10.139.113:8801/hls/97/index.m3u8"
+          "url": "http://124.228.160.210:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0"
         },
         {
           "label": "CCTV-15 音乐(备4)",
@@ -409,10 +405,6 @@
         {
           "label": "CCTV-17 农业农村",
           "url": "http://60.10.139.113:8801/hls/98/index.m3u8"
-        },
-        {
-          "label": "CCTV-17 农业农村(备1)",
-          "url": "http://121.57.88.206:898/hls/17/index.m3u8"
         }
       ]
     },
