@@ -31,15 +31,13 @@ UPSTREAM_SOURCES = [
     # 央视专用源
     "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8",
     # 全频道源（含央视）
+    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all.m3u8",
     "https://raw.githubusercontent.com/cs3306/IPTV-Sources/main/data/output/iptv_collection.m3u",
     "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
     "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
-    # 注: 已移除以下失效上游源（404）：
-    # - zhi35/iptv (cn_cctv.m3u8 已删除)
-    # - mytv-android/China-TV-Live-M3U8 (iptv.m3u CCTV条目为0)
-    # - BurningC4/Chinese-IPTV (tv-playlist.m3u 已删除)
-    # - imDzy/iptv (cctv.m3u 已删除)
-    # - xisuo666/IPTV (IPTV.m3u 已删除)
+    "https://raw.githubusercontent.com/vbskycn/iptv/master/tv/m3u/ipv4.m3u",
+    "https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u",
+    "https://raw.githubusercontent.com/ssili126/tv/main/tv.m3u",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -264,17 +262,47 @@ def is_cctv_channel(name):
     return normalized in CHANNEL_ORDER
 
 
-def test_source(url, timeout=5):
+def test_source(url, timeout=5, retries=1):
     """
     测试单个直播源是否可用，返回 (url, latency_ms, status, ts_speed_kbps)
     
-    两阶段验证：
+    两阶段验证 + 重试机制：
     1. 拉取 M3U8 播放列表，验证是否为有效 M3U8 结构
-    2. 如果是媒体分片列表（非主播放列表），下载第一个 TS 分片测速
-       —— 只测 M3U8 延迟是不够的，有些源 M3U8 秒回但 TS 下载极慢，实际播放会卡顿
+    2. 如果是主播放列表（#EXT-X-STREAM-INF），选最高码率子流递归测速
+    3. 如果是媒体分片列表，下载 TS 分片测速
+    4. 网络抖动时自动重试1次
     
     ts_speed_kbps: TS 分片下载速度 (kbps)，无法测速时为 None
     """
+    for attempt in range(retries + 1):
+        result = _test_source_once(url, timeout)
+        # 如果 OK 或是 TS_FAIL（硬错误），直接返回
+        if result[2] == "OK" or result[2].startswith("TS_FAIL"):
+            return result
+        # 网络类错误且还有重试次数，等 1 秒重试
+        if attempt < retries and result[2] in ("TIMEOUT", "CONN_RESET"):
+            time.sleep(1)
+            continue
+        return result
+    return result
+
+
+def _resolve_url(base_m3u8, ts_path):
+    """将 M3U8 中的相对路径解析为绝对 URL"""
+    if ts_path.startswith("http://") or ts_path.startswith("https://"):
+        return ts_path
+    if ts_path.startswith("/"):
+        # 绝对路径：从域名拼接
+        from urllib.parse import urlparse
+        parsed = urlparse(base_m3u8)
+        return f"{parsed.scheme}://{parsed.netloc}{ts_path}"
+    # 相对路径
+    return base_m3u8.rsplit("/", 1)[0] + "/" + ts_path
+
+
+def _test_source_once(url, timeout):
+    """单次源测试（无重试），供 test_source 内部调用"""
+    import re
     start = time.time()
     ctx = get_ssl_context()
     
@@ -285,7 +313,7 @@ def test_source(url, timeout=5):
             "Accept": "*/*",
         })
         with urllib.request.urlopen(req, timeout=timeout, context=ctx) as resp:
-            data = resp.read(65536)  # 读取64KB，足以包含完整M3U8
+            data = resp.read(65536)
             m3u8_latency = int((time.time() - start) * 1000)
             content = data.decode("utf-8", errors="ignore")
             
@@ -304,9 +332,22 @@ def test_source(url, timeout=5):
         return (url, int((time.time() - start) * 1000), f"ERROR: {str(e)[:30]}", None)
     
     # ─── 阶段2: TS 分片下载测速 ───
-    # 如果是主播放列表（含 #EXT-X-STREAM-INF），跳过测速（需要再请求子流）
+    # 主播放列表：选最高码率子流递归测速
     if "#EXT-X-STREAM-INF" in content:
-        # 主播放列表，M3U8 有效即可，不深入测子流
+        streams = re.findall(
+            r'#EXT-X-STREAM-INF:.*?BANDWIDTH=(\d+).*?\n\s*(.+?)\s*(?:\n|$)',
+            content, re.MULTILINE
+        )
+        if streams:
+            best = max(streams, key=lambda x: int(x[0]))
+            sub_url = _resolve_url(url, best[1].strip())
+            bw = int(best[0])
+            # 递归测子流，但只测一次不重试
+            sub_result = _test_source_once(sub_url, timeout)
+            # 继承子流的测速结果
+            _, lat, status, speed = sub_result
+            if status == "OK":
+                return (url, lat, "OK", speed or bw // 1000)
         return (url, m3u8_latency, "OK", None)
     
     # 媒体分片列表，找第一个 TS 分片 URL
@@ -314,32 +355,27 @@ def test_source(url, timeout=5):
     ts_url = None
     for line in lines:
         line = line.strip()
-        if line and not line.startswith("#") and line.startswith("http"):
-            ts_url = line
-            break
-        elif line and not line.startswith("#"):
-            # 可能是相对路径
-            if line.endswith(".ts") or ".ts?" in line:
-                # 相对于 M3U8 URL 的路径
-                base = url.rsplit("/", 1)[0]
-                ts_url = base + "/" + line
+        if line and not line.startswith("#"):
+            if line.startswith("http"):
+                ts_url = line
+                break
+            elif line.endswith(".ts") or ".ts?" in line:
+                ts_url = _resolve_url(url, line)
                 break
     
     if not ts_url:
-        # 没有 TS 分片，可能是不完整的 M3U8
         return (url, m3u8_latency, "OK", None)
     
-    # 下载 TS 分片测速（最多下载 10 秒 / 5MB）
+    # 下载 TS 分片测速（最多下载 8 秒 / 3MB）
     ts_start = time.time()
     try:
         ts_req = urllib.request.Request(ts_url, headers={
             "User-Agent": "Mozilla/5.0",
             "Accept": "*/*",
         })
-        with urllib.request.urlopen(ts_req, timeout=10, context=ctx) as ts_resp:
-            # 读取最多 5MB 用于测速
+        with urllib.request.urlopen(ts_req, timeout=8, context=ctx) as ts_resp:
             downloaded = 0
-            max_read = 5 * 1024 * 1024
+            max_read = 3 * 1024 * 1024
             while downloaded < max_read:
                 chunk = ts_resp.read(65536)
                 if not chunk:
@@ -349,15 +385,11 @@ def test_source(url, timeout=5):
             
             if ts_time > 0 and downloaded > 0:
                 speed_kbps = int((downloaded * 8) / ts_time / 1000)
-                # 综合延迟 = M3U8延迟 + TS下载预估延迟
-                # 如果 TS 速度 < 2000 kbps（2Mbps），标记为慢速源
-                if speed_kbps < 2000:
-                    return (url, m3u8_latency, f"SLOW_TS({speed_kbps}kbps)", speed_kbps)
+                # 保留所有能下到TS分片的源（无论快慢），慢的当备用
                 return (url, m3u8_latency, "OK", speed_kbps)
             else:
                 return (url, m3u8_latency, "OK", None)
     except Exception as e:
-        # TS 下载失败 = 源不可用！不能标记为OK，否则TVBox会尝试这个死源然后超时卡顿
         err_msg = str(e)[:30]
         return (url, m3u8_latency, f"TS_FAIL({err_msg})", None)
 
@@ -513,8 +545,7 @@ def main():
                 if status == "OK":
                     speed_str = f" {ts_speed}kbps" if ts_speed else ""
                     print(f"   [{tested:3d}/{total}] ✓ {ch}: {latency:4d}ms{speed_str} {url[:60]}...")
-                elif status.startswith("SLOW_TS"):
-                    print(f"   [{tested:3d}/{total}] ⚠ {ch}: {latency:4d}ms [{status}] {url[:60]}...")
+                # 慢速源不再单独标记（所有能下到TS的都保留）
                 else:
                     print(f"   [{tested:3d}/{total}] ✗ {ch}: {latency:4d}ms [{status}] {url[:60]}...")
             except Exception as e:
@@ -634,12 +665,29 @@ def main():
     with open(OUTPUT_M3U, "w", encoding="utf-8") as f:
         f.write(m3u_content)
 
+    # ─── 生成 live.txt（TVBox/KO影视 TXT 格式）───
+    LIVE_TXT = os.path.join(OUTPUT_DIR, "live.txt")
+    txt_lines = ["央视,#genre#"]
+    for ch in CHANNEL_ORDER:
+        ch_results = results.get(ch, [])
+        ok_sources = [(url, lat, ts_speed) for url, lat, status, ts_speed in ch_results if status == "OK"]
+        ok_sources.sort(key=lambda x: (-(x[2] or 0), x[1]))
+        top_sources = ok_sources[:args.top_n]
+        for i, (url, lat, ts_speed) in enumerate(top_sources):
+            label = ch
+            if i > 0:
+                label += f"(备{i})"
+            txt_lines.append(f"{label},{url}")
+    with open(LIVE_TXT, "w", encoding="utf-8") as f:
+        f.write("\n".join(txt_lines) + "\n")
+
     report_content = "\n".join(report_lines)
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
         f.write(report_content)
 
     print(f"\n✅ 完成!")
     print(f"   M3U 文件: {OUTPUT_M3U}")
+    print(f"   TXT 文件: {LIVE_TXT}")
     print(f"   验证报告: {REPORT_FILE}")
     print(f"   可用率: {total_ok}/{total_all} ({total_ok/total_all*100:.1f}%)" if total_all > 0 else "   可用率: N/A")
 
