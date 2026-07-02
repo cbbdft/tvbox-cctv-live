@@ -8,25 +8,25 @@
     },
     {
       "name": "CCTV-1 综合",
-      "url": "http://74.91.26.218:82/live/cctv1hd.m3u8",
-      "tvg_id": "CCTV1",
-      "tvg_logo": "https://epg.pw/channel/CCTV1.png"
-    },
-    {
-      "name": "CCTV-1 综合",
-      "url": "http://222.223.41.27:8888/hls/1/index.m3u8",
-      "tvg_id": "CCTV1",
-      "tvg_logo": "https://epg.pw/channel/CCTV1.png"
-    },
-    {
-      "name": "CCTV-1 综合",
       "url": "http://60.10.139.113:8801/hls/1/index.m3u8",
       "tvg_id": "CCTV1",
       "tvg_logo": "https://epg.pw/channel/CCTV1.png"
     },
     {
       "name": "CCTV-1 综合",
+      "url": "http://153.0.171.163:9901/tsfile/live/0001_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "tvg_id": "CCTV1",
+      "tvg_logo": "https://epg.pw/channel/CCTV1.png"
+    },
+    {
+      "name": "CCTV-1 综合",
       "url": "http://play.kankanlive.com/live/1698234869325962.m3u8",
+      "tvg_id": "CCTV1",
+      "tvg_logo": "https://epg.pw/channel/CCTV1.png"
+    },
+    {
+      "name": "CCTV-1 综合",
+      "url": "http://222.223.41.27:8888/hls/1/index.m3u8",
       "tvg_id": "CCTV1",
       "tvg_logo": "https://epg.pw/channel/CCTV1.png"
     },
@@ -44,6 +44,12 @@
     },
     {
       "name": "CCTV-2 财经",
+      "url": "http://60.10.139.113:8801/hls/2/index.m3u8",
+      "tvg_id": "CCTV2",
+      "tvg_logo": "https://epg.pw/channel/CCTV2.png"
+    },
+    {
+      "name": "CCTV-2 财经",
       "url": "http://36.136.38.87:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0",
       "tvg_id": "CCTV2",
       "tvg_logo": "https://epg.pw/channel/CCTV2.png"
@@ -55,12 +61,6 @@
       "tvg_logo": "https://epg.pw/channel/CCTV2.png"
     },
     {
-      "name": "CCTV-2 财经",
-      "url": "http://60.10.139.113:8801/hls/2/index.m3u8",
-      "tvg_id": "CCTV2",
-      "tvg_logo": "https://epg.pw/channel/CCTV2.png"
-    },
-    {
       "name": "CCTV-3 综艺",
       "url": "http://74.91.26.218:82/live/cctv3hd.m3u8",
       "tvg_id": "CCTV3",
@@ -68,13 +68,13 @@
     },
     {
       "name": "CCTV-3 综艺",
-      "url": "http://222.223.41.27:8888/hls/3/index.m3u8",
+      "url": "http://121.57.88.206:898/hls/3/index.m3u8",
       "tvg_id": "CCTV3",
       "tvg_logo": "https://epg.pw/channel/CCTV3.png"
     },
     {
       "name": "CCTV-3 综艺",
-      "url": "http://121.57.88.206:898/hls/3/index.m3u8",
+      "url": "http://222.223.41.27:8888/hls/3/index.m3u8",
       "tvg_id": "CCTV3",
       "tvg_logo": "https://epg.pw/channel/CCTV3.png"
     },
@@ -104,13 +104,13 @@
     },
     {
       "name": "CCTV-4 中文国际",
-      "url": "http://120.198.95.220:9901/tsfile/live/1018_1.m3u8?key=txiptv&playlive=1&down=1",
+      "url": "http://113.25.252.226:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&authid=0",
       "tvg_id": "CCTV4",
       "tvg_logo": "https://epg.pw/channel/CCTV4.png"
     },
     {
       "name": "CCTV-4 中文国际",
-      "url": "http://113.25.252.226:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "url": "http://120.198.95.220:9901/tsfile/live/1018_1.m3u8?key=txiptv&playlive=1&down=1",
       "tvg_id": "CCTV4",
       "tvg_logo": "https://epg.pw/channel/CCTV4.png"
     },
@@ -119,12 +119,6 @@
       "url": "http://173.208.212.130:8181/720p/cctv4.m3u8",
       "tvg_id": "CCTV4",
       "tvg_logo": "https://epg.pw/channel/CCTV4.png"
-    },
-    {
-      "name": "CCTV-5 体育 ⚽",
-      "url": "http://153.0.171.163:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0",
-      "tvg_id": "CCTV5",
-      "tvg_logo": "https://epg.pw/channel/CCTV5.png"
     },
     {
       "name": "CCTV-5 体育 ⚽",
@@ -140,19 +134,25 @@
     },
     {
       "name": "CCTV-5 体育 ⚽",
+      "url": "http://153.0.171.163:9901/tsfile/live/0005_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "tvg_id": "CCTV5",
+      "tvg_logo": "https://epg.pw/channel/CCTV5.png"
+    },
+    {
+      "name": "CCTV-5 体育 ⚽",
       "url": "http://120.211.62.180:8000/hls/18/index.m3u8",
       "tvg_id": "CCTV5",
       "tvg_logo": "https://epg.pw/channel/CCTV5.png"
     },
     {
       "name": "CCTV-5+ 体育赛事 ⚽",
-      "url": "http://120.198.95.220:9901/tsfile/live/1020_1.m3u8?key=txiptv&playlive=1&down=1",
+      "url": "http://124.228.160.210:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0",
       "tvg_id": "CCTV5PLUS",
       "tvg_logo": "https://epg.pw/channel/CCTV5PLUS.png"
     },
     {
       "name": "CCTV-5+ 体育赛事 ⚽",
-      "url": "http://124.228.160.210:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "url": "http://120.198.95.220:9901/tsfile/live/1020_1.m3u8?key=txiptv&playlive=1&down=1",
       "tvg_id": "CCTV5PLUS",
       "tvg_logo": "https://epg.pw/channel/CCTV5PLUS.png"
     },
@@ -176,12 +176,6 @@
     },
     {
       "name": "CCTV-7 国防军事",
-      "url": "http://153.0.171.163:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0",
-      "tvg_id": "CCTV7",
-      "tvg_logo": "https://epg.pw/channel/CCTV7.png"
-    },
-    {
-      "name": "CCTV-7 国防军事",
       "url": "http://222.223.41.27:8888/hls/7/index.m3u8",
       "tvg_id": "CCTV7",
       "tvg_logo": "https://epg.pw/channel/CCTV7.png"
@@ -200,6 +194,12 @@
     },
     {
       "name": "CCTV-7 国防军事",
+      "url": "http://153.0.171.163:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "tvg_id": "CCTV7",
+      "tvg_logo": "https://epg.pw/channel/CCTV7.png"
+    },
+    {
+      "name": "CCTV-7 国防军事",
       "url": "http://173.208.212.130:8181/720p/cctv7.m3u8",
       "tvg_id": "CCTV7",
       "tvg_logo": "https://epg.pw/channel/CCTV7.png"
@@ -212,7 +212,7 @@
     },
     {
       "name": "CCTV-8 电视剧",
-      "url": "http://120.198.95.220:9901/tsfile/live/1023_1.m3u8?key=txiptv&playlive=1&down=1",
+      "url": "http://60.10.139.113:8801/hls/8/index.m3u8",
       "tvg_id": "CCTV8",
       "tvg_logo": "https://epg.pw/channel/CCTV8.png"
     },
@@ -224,7 +224,7 @@
     },
     {
       "name": "CCTV-8 电视剧",
-      "url": "http://60.10.139.113:8801/hls/8/index.m3u8",
+      "url": "http://120.198.95.220:9901/tsfile/live/1023_1.m3u8?key=txiptv&playlive=1&down=1",
       "tvg_id": "CCTV8",
       "tvg_logo": "https://epg.pw/channel/CCTV8.png"
     },
@@ -260,7 +260,7 @@
     },
     {
       "name": "CCTV-9 纪录",
-      "url": "https://xykt-fix.github.io/Y77.m3u8",
+      "url": "https://v4-e6b1c5baf4e240fe63adbf68dda23435.livehwc4.com/play.kankanlive.com/live/1698423397390920.m3u8?sub_m3u8=true&edge_slice=true&user_session_id=73b69ea221be0bd00d6e465f10653101",
       "tvg_id": "CCTV9",
       "tvg_logo": "https://epg.pw/channel/CCTV9.png"
     },
@@ -278,15 +278,21 @@
     },
     {
       "name": "CCTV-10 科教",
-      "url": "https://hwapi.yntv.net/ew265l/z1z6s5.m3u8",
+      "url": "http://60.10.139.113:8801/hls/10/index.m3u8",
       "tvg_id": "CCTV10",
       "tvg_logo": "https://epg.pw/channel/CCTV10.png"
     },
     {
       "name": "CCTV-10 科教",
-      "url": "http://60.10.139.113:8801/hls/10/index.m3u8",
+      "url": "https://hwapi.yntv.net/ew265l/z1z6s5.m3u8",
       "tvg_id": "CCTV10",
       "tvg_logo": "https://epg.pw/channel/CCTV10.png"
+    },
+    {
+      "name": "CCTV-11 戏曲",
+      "url": "http://222.223.41.27:8888/hls/11/index.m3u8",
+      "tvg_id": "CCTV11",
+      "tvg_logo": "https://epg.pw/channel/CCTV11.png"
     },
     {
       "name": "CCTV-11 戏曲",
@@ -307,18 +313,6 @@
       "tvg_logo": "https://epg.pw/channel/CCTV11.png"
     },
     {
-      "name": "CCTV-11 戏曲",
-      "url": "http://60.10.139.113:8801/hls/96/index.m3u8",
-      "tvg_id": "CCTV11",
-      "tvg_logo": "https://epg.pw/channel/CCTV11.png"
-    },
-    {
-      "name": "CCTV-11 戏曲",
-      "url": "http://222.223.41.27:8888/hls/11/index.m3u8",
-      "tvg_id": "CCTV11",
-      "tvg_logo": "https://epg.pw/channel/CCTV11.png"
-    },
-    {
       "name": "CCTV-12 社会与法",
       "url": "http://74.91.26.218:82/live/cctv12hd.m3u8",
       "tvg_id": "CCTV12",
@@ -326,13 +320,19 @@
     },
     {
       "name": "CCTV-12 社会与法",
-      "url": "http://153.0.171.163:9901/tsfile/live/1011_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "url": "http://60.10.139.113:8801/hls/11/index.m3u8",
       "tvg_id": "CCTV12",
       "tvg_logo": "https://epg.pw/channel/CCTV12.png"
     },
     {
       "name": "CCTV-12 社会与法",
-      "url": "http://60.10.139.113:8801/hls/11/index.m3u8",
+      "url": "http://111.8.224.6:9999/tsfile/live/1043_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "tvg_id": "CCTV12",
+      "tvg_logo": "https://epg.pw/channel/CCTV12.png"
+    },
+    {
+      "name": "CCTV-12 社会与法",
+      "url": "http://153.0.171.163:9901/tsfile/live/1011_1.m3u8?key=txiptv&playlive=1&authid=0",
       "tvg_id": "CCTV12",
       "tvg_logo": "https://epg.pw/channel/CCTV12.png"
     },
@@ -344,7 +344,7 @@
     },
     {
       "name": "CCTV-13 新闻",
-      "url": "http://222.223.41.27:8888/hls/13/index.m3u8",
+      "url": "http://60.10.139.113:8801/hls/12/index.m3u8",
       "tvg_id": "CCTV13",
       "tvg_logo": "https://epg.pw/channel/CCTV13.png"
     },
@@ -356,7 +356,7 @@
     },
     {
       "name": "CCTV-13 新闻",
-      "url": "http://60.10.139.113:8801/hls/12/index.m3u8",
+      "url": "http://222.223.41.27:8888/hls/13/index.m3u8",
       "tvg_id": "CCTV13",
       "tvg_logo": "https://epg.pw/channel/CCTV13.png"
     },
@@ -368,19 +368,13 @@
     },
     {
       "name": "CCTV-14 少儿",
-      "url": "http://222.223.41.27:8888/hls/14/index.m3u8",
-      "tvg_id": "CCTV14",
-      "tvg_logo": "https://epg.pw/channel/CCTV14.png"
-    },
-    {
-      "name": "CCTV-14 少儿",
       "url": "https://event.pull.hebtv.com/jishi/cp2.m3u8",
       "tvg_id": "CCTV14",
       "tvg_logo": "https://epg.pw/channel/CCTV14.png"
     },
     {
       "name": "CCTV-14 少儿",
-      "url": "http://36.136.38.87:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "url": "http://222.223.41.27:8888/hls/14/index.m3u8",
       "tvg_id": "CCTV14",
       "tvg_logo": "https://epg.pw/channel/CCTV14.png"
     },
@@ -392,19 +386,19 @@
     },
     {
       "name": "CCTV-14 少儿",
+      "url": "http://36.136.38.87:9901/tsfile/live/0014_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "tvg_id": "CCTV14",
+      "tvg_logo": "https://epg.pw/channel/CCTV14.png"
+    },
+    {
+      "name": "CCTV-14 少儿",
       "url": "http://173.208.212.130:8181/720p/cctv14.m3u8",
       "tvg_id": "CCTV14",
       "tvg_logo": "https://epg.pw/channel/CCTV14.png"
     },
     {
       "name": "CCTV-15 音乐",
-      "url": "http://36.136.38.87:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0",
-      "tvg_id": "CCTV15",
-      "tvg_logo": "https://epg.pw/channel/CCTV15.png"
-    },
-    {
-      "name": "CCTV-15 音乐",
-      "url": "http://124.228.160.210:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "url": "https://xykt-fix.github.io/play/a02e/index.m3u8",
       "tvg_id": "CCTV15",
       "tvg_logo": "https://epg.pw/channel/CCTV15.png"
     },
@@ -416,13 +410,19 @@
     },
     {
       "name": "CCTV-15 音乐",
-      "url": "http://173.208.212.130:8181/720p/cctv15.m3u8",
+      "url": "http://124.228.160.210:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0",
       "tvg_id": "CCTV15",
       "tvg_logo": "https://epg.pw/channel/CCTV15.png"
     },
     {
       "name": "CCTV-15 音乐",
-      "url": "https://xykt-fix.github.io/play/a02e/index.m3u8",
+      "url": "http://36.136.38.87:9901/tsfile/live/0015_1.m3u8?key=txiptv&playlive=1&authid=0",
+      "tvg_id": "CCTV15",
+      "tvg_logo": "https://epg.pw/channel/CCTV15.png"
+    },
+    {
+      "name": "CCTV-15 音乐",
+      "url": "http://173.208.212.130:8181/720p/cctv15.m3u8",
       "tvg_id": "CCTV15",
       "tvg_logo": "https://epg.pw/channel/CCTV15.png"
     },
@@ -447,6 +447,12 @@
     {
       "name": "CCTV-17 农业农村",
       "url": "http://121.57.88.206:898/hls/17/index.m3u8",
+      "tvg_id": "CCTV17",
+      "tvg_logo": "https://epg.pw/channel/CCTV17.png"
+    },
+    {
+      "name": "CCTV-17 农业农村",
+      "url": "http://111.8.224.6:9999/tsfile/live/1025_1.m3u8?key=txiptv&playlive=1&authid=0",
       "tvg_id": "CCTV17",
       "tvg_logo": "https://epg.pw/channel/CCTV17.png"
     },
