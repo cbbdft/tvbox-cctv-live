@@ -14,46 +14,10 @@ import re
 import os
 from datetime import datetime, timezone, timedelta
 
-# 频道映射与顺序应与 validate_sources.py 中 CHANNEL_ALIASES / CHANNEL_ORDER 保持一致
-# 如需修改频道列表，请同步更新两个文件
-
-CHANNEL_MAP = {
-    "CCTV-1 综合": "CCTV1",
-    "CCTV-2 财经": "CCTV2",
-    "CCTV-3 综艺": "CCTV3",
-    "CCTV-4 中文国际": "CCTV4",
-    "CCTV-5 体育": "CCTV5",
-    "CCTV-5+ 体育赛事": "CCTV5PLUS",
-    "CCTV-6 电影": "CCTV6",
-    "CCTV-7 国防军事": "CCTV7",
-    "CCTV-8 电视剧": "CCTV8",
-    "CCTV-9 纪录": "CCTV9",
-    "CCTV-10 科教": "CCTV10",
-    "CCTV-11 戏曲": "CCTV11",
-    "CCTV-12 社会与法": "CCTV12",
-    "CCTV-13 新闻": "CCTV13",
-    "CCTV-14 少儿": "CCTV14",
-    "CCTV-15 音乐": "CCTV15",
-    "CCTV-16 奥林匹克": "CCTV16",
-    "CCTV-17 农业农村": "CCTV17",
-    "CCTV-4K 超高清": "CCTV4K",
-}
-
-SPORTS_CHANNELS = {"CCTV-5 体育", "CCTV-5+ 体育赛事"}
-
-# 频道顺序（与 validate_sources.py CHANNEL_ORDER 保持一致）
-CHANNEL_ORDER = [
-    "CCTV-1 综合", "CCTV-2 财经", "CCTV-3 综艺", "CCTV-4 中文国际",
-    "CCTV-5 体育", "CCTV-5+ 体育赛事", "CCTV-6 电影", "CCTV-7 国防军事",
-    "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-10 科教", "CCTV-11 戏曲",
-    "CCTV-12 社会与法", "CCTV-13 新闻", "CCTV-14 少儿", "CCTV-15 音乐",
-    "CCTV-16 奥林匹克", "CCTV-17 农业农村", "CCTV-4K 超高清",
-]
-
-
-def get_channel_logo(ch_name):
-    code = CHANNEL_MAP.get(ch_name, "CCTV1")
-    return f"https://epg.pw/channel/{code}.png"
+# 从共享模块导入频道配置
+from scripts.channels import (
+    CHANNEL_MAP, CHANNEL_ORDER, SPORTS_CHANNELS, get_channel_logo,
+)
 
 
 def main():

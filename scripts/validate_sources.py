@@ -24,6 +24,12 @@ import urllib.error
 import ssl
 from datetime import datetime, timezone, timedelta
 
+# 从共享模块导入频道配置
+from scripts.channels import (
+    CHANNEL_ALIASES, CHANNEL_ORDER, SPORTS_CHANNELS,
+    get_channel_logo, get_channel_code as _num_to_channel,
+)
+
 # ─── 配置 ───────────────────────────────────────────────
 UPSTREAM_SOURCES = [
     # 全球最大IPTV聚合项目（88K+ Stars，最稳定）
@@ -45,38 +51,12 @@ OUTPUT_M3U = os.path.join(OUTPUT_DIR, "CCTV直播源.m3u")
 REPORT_FILE = os.path.join(OUTPUT_DIR, "验证报告.md")
 
 # 频道名称标准化映射
-CHANNEL_ALIASES = {
-    "CCTV1": "CCTV-1 综合",
-    "CCTV2": "CCTV-2 财经",
-    "CCTV3": "CCTV-3 综艺",
-    "CCTV4": "CCTV-4 中文国际",
-    "CCTV5+": "CCTV-5+ 体育赛事",
-    "CCTV5PLUS": "CCTV-5+ 体育赛事",
-    "CCTV5": "CCTV-5 体育",
-    "CCTV6": "CCTV-6 电影",
-    "CCTV7": "CCTV-7 国防军事",
-    "CCTV8": "CCTV-8 电视剧",
-    "CCTV9": "CCTV-9 纪录",
-    "CCTV11": "CCTV-11 戏曲",
-    "CCTV12": "CCTV-12 社会与法",
-    "CCTV13": "CCTV-13 新闻",
-    "CCTV14": "CCTV-14 少儿",
-    "CCTV15": "CCTV-15 音乐",
-    "CCTV16": "CCTV-16 奥林匹克",
-    "CCTV17": "CCTV-17 农业农村",
-    "CCTV4K": "CCTV-4K 超高清",
-}
+CHANNEL_ALIASES = CHANNEL_ALIASES  # noqa: F811
 
-CHANNEL_ORDER = [
-    "CCTV-1 综合", "CCTV-2 财经", "CCTV-3 综艺", "CCTV-4 中文国际",
-    "CCTV-5 体育", "CCTV-5+ 体育赛事", "CCTV-6 电影", "CCTV-7 国防军事",
-    "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-11 戏曲",
-    "CCTV-12 社会与法", "CCTV-13 新闻", "CCTV-14 少儿", "CCTV-15 音乐",
-    "CCTV-16 奥林匹克", "CCTV-17 农业农村", "CCTV-4K 超高清",
-]
+CHANNEL_ORDER = CHANNEL_ORDER  # noqa: F811
 
 # 需要特殊标记的频道（体育类）
-SPORTS_CHANNELS = {"CCTV-5 体育", "CCTV-5+ 体育赛事"}
+SPORTS_CHANNELS = SPORTS_CHANNELS  # noqa: F811
 
 # 时效性URL黑名单域名（这些URL带鉴权参数，短期可用但很快失效）
 EPHEMERAL_DOMAINS = [
@@ -186,19 +166,6 @@ def normalize_channel_name(name):
     return name
 
 
-def _num_to_channel(num_int):
-    """将 CCTV 频道数字映射为标准名称"""
-    channel_map = {
-        1: "CCTV-1 综合", 2: "CCTV-2 财经", 3: "CCTV-3 综艺",
-        4: "CCTV-4 中文国际", 5: "CCTV-5 体育", 6: "CCTV-6 电影",
-        7: "CCTV-7 国防军事", 8: "CCTV-8 电视剧", 9: "CCTV-9 纪录",
-        11: "CCTV-11 戏曲", 12: "CCTV-12 社会与法",
-        13: "CCTV-13 新闻", 14: "CCTV-14 少儿", 15: "CCTV-15 音乐",
-        16: "CCTV-16 奥林匹克", 17: "CCTV-17 农业农村",
-    }
-    return channel_map.get(num_int, f"CCTV-{num_int}")
-
-
 def is_ephemeral_url(url):
     """判断是否为时效性URL（带鉴权参数，短期可用但很快失效）"""
     url_lower = url.lower()
@@ -262,7 +229,7 @@ def correct_channel_by_url(channel_name, url):
 def is_cctv_channel(name):
     """判断是否为 CCTV 频道"""
     normalized = normalize_channel_name(name)
-    return normalized in CHANNEL_ORDER
+    return normalized is not None and normalized in CHANNEL_ORDER
 
 
 def test_source(url, timeout=5, retries=1):
@@ -395,24 +362,6 @@ def _test_source_once(url, timeout):
     except Exception as e:
         err_msg = str(e)[:30]
         return (url, m3u8_latency, f"TS_FAIL({err_msg})", None)
-
-
-def get_channel_logo(name):
-    """获取频道 Logo URL"""
-    num_map = {
-        "CCTV-1 综合": "CCTV1", "CCTV-2 财经": "CCTV2",
-        "CCTV-3 综艺": "CCTV3", "CCTV-4 中文国际": "CCTV4",
-        "CCTV-5 体育": "CCTV5", "CCTV-5+ 体育赛事": "CCTV5PLUS",
-        "CCTV-6 电影": "CCTV6", "CCTV-7 国防军事": "CCTV7",
-        "CCTV-8 电视剧": "CCTV8", "CCTV-9 纪录": "CCTV9",
-        "CCTV-11 戏曲": "CCTV11",
-        "CCTV-12 社会与法": "CCTV12", "CCTV-13 新闻": "CCTV13",
-        "CCTV-14 少儿": "CCTV14", "CCTV-15 音乐": "CCTV15",
-        "CCTV-16 奥林匹克": "CCTV16", "CCTV-17 农业农村": "CCTV17",
-        "CCTV-4K 超高清": "CCTV4K",
-    }
-    code = num_map.get(name, "CCTV1")
-    return f"https://epg.pw/channel/{code}.png"
 
 
 # ─── 主流程 ───────────────────────────────────────────────
