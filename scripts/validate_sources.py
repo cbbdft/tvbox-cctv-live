@@ -571,7 +571,7 @@ def main():
             if i > 0:
                 label += f"(备{i})"
 
-            logo = get_channel_logo(name=ch)
+            logo = get_channel_logo(ch)
             # 生成干净的 tvg-id（从 logo URL 提取）
             tvg_id = logo.split("/")[-1].replace(".png", "")
             m3u_lines.append(
