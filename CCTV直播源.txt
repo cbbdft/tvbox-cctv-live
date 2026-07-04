@@ -1,23 +1,22 @@
 # CCTV 直播源 TXT格式
-# 更新时间: 2026-07-04 19:22:54 CST
+# 更新时间: 2026-07-04 20:04:51 CST
 # 格式: 频道名,URL
 
 CCTV-1 综合,http://74.91.26.218:82/live/cctv1hd.m3u8
 CCTV-2 财经,http://36.136.38.87:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-3 综艺,http://74.91.26.218:82/live/cctv3hd.m3u8
 CCTV-4 中文国际,http://36.136.38.87:9901/tsfile/live/0004_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-5 体育 ⚽,http://112.123.243.37:50085/tsfile/live/0005_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-5 体育 ⚽,http://222.223.41.27:8888/hls/5/index.m3u8
 CCTV-5+ 体育赛事 ⚽,http://124.228.160.210:9901/tsfile/live/0016_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-6 电影,http://69.30.245.50/live/cctv6.m3u8
-CCTV-7 国防军事,http://153.0.171.163:9901/tsfile/live/0007_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-6 电影,http://121.57.88.206:898/hls/6/index.m3u8
+CCTV-7 国防军事,http://222.223.41.27:8888/hls/7/index.m3u8
 CCTV-8 电视剧,http://222.223.41.27:8888/hls/8/index.m3u8
 CCTV-9 纪录,http://74.91.26.218:82/live/cctv9hd.m3u8
-CCTV-10 科教,http://124.228.160.210:9901/tsfile/live/0010_1.m3u8?key=txiptv&playlive=1&authid=0
 CCTV-11 戏曲,http://cd-live-stream.news.cctvplus.com/live/smil:CHANNEL1.smil/chunklist_w744036192_b1000000.m3u8
 CCTV-12 社会与法,http://74.91.26.218:82/live/cctv12hd.m3u8
 CCTV-13 新闻,https://event.pull.hebtv.com/jishi/cp1.m3u8
 CCTV-14 少儿,https://event.pull.hebtv.com/jishi/cp2.m3u8
-CCTV-15 音乐,https://xykt-fix.github.io/play/a02e/index.m3u8
-CCTV-16 奥林匹克,http://173.208.212.130:8181/720p/cctv16.m3u8
-CCTV-17 农业农村,http://111.8.224.6:9999/tsfile/live/1025_1.m3u8?key=txiptv&playlive=1&authid=0
+CCTV-15 音乐,http://222.223.41.27:8888/hls/15/index.m3u8
+CCTV-16 奥林匹克,http://121.57.88.206:898/hls/16/index.m3u8
+CCTV-17 农业农村,http://121.57.88.206:898/hls/17/index.m3u8
 CCTV-4K 超高清,http://198.204.240.250:82/live/cctv4k.m3u8
