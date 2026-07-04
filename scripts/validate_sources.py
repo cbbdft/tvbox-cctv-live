@@ -57,7 +57,6 @@ CHANNEL_ALIASES = {
     "CCTV7": "CCTV-7 国防军事",
     "CCTV8": "CCTV-8 电视剧",
     "CCTV9": "CCTV-9 纪录",
-    "CCTV10": "CCTV-10 科教",
     "CCTV11": "CCTV-11 戏曲",
     "CCTV12": "CCTV-12 社会与法",
     "CCTV13": "CCTV-13 新闻",
@@ -71,7 +70,7 @@ CHANNEL_ALIASES = {
 CHANNEL_ORDER = [
     "CCTV-1 综合", "CCTV-2 财经", "CCTV-3 综艺", "CCTV-4 中文国际",
     "CCTV-5 体育", "CCTV-5+ 体育赛事", "CCTV-6 电影", "CCTV-7 国防军事",
-    "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-10 科教", "CCTV-11 戏曲",
+    "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-11 戏曲",
     "CCTV-12 社会与法", "CCTV-13 新闻", "CCTV-14 少儿", "CCTV-15 音乐",
     "CCTV-16 奥林匹克", "CCTV-17 农业农村", "CCTV-4K 超高清",
 ]
@@ -173,7 +172,11 @@ def normalize_channel_name(name):
         num = match.group(1)
         if match.group(0).endswith("+"):
             return f"CCTV-{num}+ 体育赛事"
-        return _num_to_channel(int(num))
+        result = _num_to_channel(int(num))
+        # 过滤：CCTV-10 不予收录
+        if result == "CCTV-10 科教":
+            return None
+        return result
 
     # 匹配中文名称: "CCTV4K 超高清", "CCTV5+ 体育赛事" 等
     for ch_name in CHANNEL_ORDER:
@@ -189,7 +192,7 @@ def _num_to_channel(num_int):
         1: "CCTV-1 综合", 2: "CCTV-2 财经", 3: "CCTV-3 综艺",
         4: "CCTV-4 中文国际", 5: "CCTV-5 体育", 6: "CCTV-6 电影",
         7: "CCTV-7 国防军事", 8: "CCTV-8 电视剧", 9: "CCTV-9 纪录",
-        10: "CCTV-10 科教", 11: "CCTV-11 戏曲", 12: "CCTV-12 社会与法",
+        11: "CCTV-11 戏曲", 12: "CCTV-12 社会与法",
         13: "CCTV-13 新闻", 14: "CCTV-14 少儿", 15: "CCTV-15 音乐",
         16: "CCTV-16 奥林匹克", 17: "CCTV-17 农业农村",
     }
@@ -402,7 +405,7 @@ def get_channel_logo(name):
         "CCTV-5 体育": "CCTV5", "CCTV-5+ 体育赛事": "CCTV5PLUS",
         "CCTV-6 电影": "CCTV6", "CCTV-7 国防军事": "CCTV7",
         "CCTV-8 电视剧": "CCTV8", "CCTV-9 纪录": "CCTV9",
-        "CCTV-10 科教": "CCTV10", "CCTV-11 戏曲": "CCTV11",
+        "CCTV-11 戏曲": "CCTV11",
         "CCTV-12 社会与法": "CCTV12", "CCTV-13 新闻": "CCTV13",
         "CCTV-14 少儿": "CCTV14", "CCTV-15 音乐": "CCTV15",
         "CCTV-16 奥林匹克": "CCTV16", "CCTV-17 农业农村": "CCTV17",
