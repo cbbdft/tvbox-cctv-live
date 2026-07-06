@@ -32,18 +32,37 @@ from scripts.channels import (
 
 # ─── 配置 ───────────────────────────────────────────────
 UPSTREAM_SOURCES = [
-    # 全球最大IPTV聚合项目（88K+ Stars，最稳定）
-    "https://iptv-org.github.io/iptv/countries/cn.m3u",
-    # 央视专用源
+    # ═══ 一级源：独立采集/每日更新 ═══
+    # best-fan：央视专用源（每日更新，CCTV 最全）
     "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8",
-    # 全频道源（含央视）
+    # best-fan：全频道源（央视+卫视+付费 46+频道，每日更新）
     "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all.m3u8",
+    # best-fan：卫视专用源（37个省级卫视，每日更新）
+    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_province.m3u8",
+    # cs3306：40+源聚合，自动分类/检测，每日更新（8128个频道）
     "https://raw.githubusercontent.com/cs3306/IPTV-Sources/main/data/output/iptv_collection.m3u",
-    "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
+    # fanmingming：经典 IPv6 源（长期稳定）
     "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
-    "https://raw.githubusercontent.com/vbskycn/iptv/master/tv/m3u/ipv4.m3u",
+    # YanG-1989：聚合源（长期维护）
     "https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u",
-    "https://raw.githubusercontent.com/ssili126/tv/main/tv.m3u",
+
+    # ═══ 二级源：社区聚合（稳定性较好） ═══
+    # iptv-org：全球最大IPTV聚合项目（88K+ Stars）
+    "https://iptv-org.github.io/iptv/countries/cn.m3u",
+    # zhi35/iptv：每日自动更新（Github Actions）
+    "https://raw.githubusercontent.com/zhi35/iptv/master/iptv.m3u",
+    # zhi35/iptv：中国频道专用
+    "https://raw.githubusercontent.com/zhi35/iptv/master/live-china.m3u",
+    # neofung：每日自动更新
+    "https://git.neofung.org/neo/iptv/raw/branch/master/iptv.m3u",
+    # YueChan/Live：社区源
+    "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
+
+    # ═══ 三级源：辅助补充 ═══
+    # best-fan：央视源含分辨率/流畅度信息
+    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv_status.m3u8",
+    # best-fan：全频道含分辨率/流畅度
+    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all_status.m3u8",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -153,9 +172,6 @@ def normalize_channel_name(name):
         if match.group(0).endswith("+"):
             return f"CCTV-{num}+ 体育赛事"
         result = _num_to_channel(int(num))
-        # 过滤：CCTV-10 不予收录
-        if result == "CCTV-10 科教":
-            return None
         return result
 
     # 匹配中文名称: "CCTV4K 超高清", "CCTV5+ 体育赛事" 等
