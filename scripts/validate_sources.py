@@ -32,37 +32,18 @@ from scripts.channels import (
 
 # ─── 配置 ───────────────────────────────────────────────
 UPSTREAM_SOURCES = [
-    # ═══ 一级源：独立采集/每日更新 ═══
-    # best-fan：央视专用源（每日更新，CCTV 最全）
-    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8",
-    # best-fan：全频道源（央视+卫视+付费 46+频道，每日更新）
-    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all.m3u8",
-    # best-fan：卫视专用源（37个省级卫视，每日更新）
-    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_province.m3u8",
-    # cs3306：40+源聚合，自动分类/检测，每日更新（8128个频道）
-    "https://raw.githubusercontent.com/cs3306/IPTV-Sources/main/data/output/iptv_collection.m3u",
-    # fanmingming：经典 IPv6 源（长期稳定）
-    "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
-    # YanG-1989：聚合源（长期维护）
-    "https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u",
-
-    # ═══ 二级源：社区聚合（稳定性较好） ═══
-    # iptv-org：全球最大IPTV聚合项目（88K+ Stars）
+    # 全球最大IPTV聚合项目（88K+ Stars，最稳定）
     "https://iptv-org.github.io/iptv/countries/cn.m3u",
-    # zhi35/iptv：每日自动更新（Github Actions）
-    "https://raw.githubusercontent.com/zhi35/iptv/master/iptv.m3u",
-    # zhi35/iptv：中国频道专用
-    "https://raw.githubusercontent.com/zhi35/iptv/master/live-china.m3u",
-    # neofung：每日自动更新
-    "https://git.neofung.org/neo/iptv/raw/branch/master/iptv.m3u",
-    # YueChan/Live：社区源
+    # 央视专用源
+    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv.m3u8",
+    # 全频道源（含央视）
+    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all.m3u8",
+    "https://raw.githubusercontent.com/cs3306/IPTV-Sources/main/data/output/iptv_collection.m3u",
     "https://raw.githubusercontent.com/YueChan/Live/main/IPTV.m3u",
-
-    # ═══ 三级源：辅助补充 ═══
-    # best-fan：央视源含分辨率/流畅度信息
-    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_cctv_status.m3u8",
-    # best-fan：全频道含分辨率/流畅度
-    "https://raw.githubusercontent.com/best-fan/iptv-sources/master/cn_all_status.m3u8",
+    "https://raw.githubusercontent.com/fanmingming/live/main/tv/m3u/ipv6.m3u",
+    "https://raw.githubusercontent.com/vbskycn/iptv/master/tv/m3u/ipv4.m3u",
+    "https://raw.githubusercontent.com/YanG-1989/m3u/main/Gather.m3u",
+    "https://raw.githubusercontent.com/ssili126/tv/main/tv.m3u",
 ]
 
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -70,12 +51,45 @@ OUTPUT_M3U = os.path.join(OUTPUT_DIR, "CCTV直播源.m3u")
 REPORT_FILE = os.path.join(OUTPUT_DIR, "验证报告.md")
 
 # 频道名称标准化映射
-CHANNEL_ALIASES = CHANNEL_ALIASES  # noqa: F811
+CHANNEL_ALIASES = {
+    "CCTV1": "CCTV-1 综合",
+    "CCTV2": "CCTV-2 财经",
+    "CCTV3": "CCTV-3 综艺",
+    "CCTV4": "CCTV-4 中文国际",
+    "CCTV5+": "CCTV-5+ 体育赛事",
+    "CCTV5PLUS": "CCTV-5+ 体育赛事",
+    "CCTV5": "CCTV-5 体育",
+    "CCTV6": "CCTV-6 电影",
+    "CCTV7": "CCTV-7 国防军事",
+    "CCTV8": "CCTV-8 电视剧",
+    "CCTV9": "CCTV-9 纪录",
+    "CCTV11": "CCTV-11 戏曲",
+    "CCTV12": "CCTV-12 社会与法",
+    "CCTV13": "CCTV-13 新闻",
+    "CCTV14": "CCTV-14 少儿",
+    "CCTV15": "CCTV-15 音乐",
+    "CCTV16": "CCTV-16 奥林匹克",
+    "CCTV17": "CCTV-17 农业农村",
+    "CCTV4K": "CCTV-4K 超高清",
+}
 
-CHANNEL_ORDER = CHANNEL_ORDER  # noqa: F811
+CHANNEL_ORDER = [
+    "CCTV-1 综合", "CCTV-2 财经", "CCTV-3 综艺", "CCTV-4 中文国际",
+    "CCTV-5 体育", "CCTV-5+ 体育赛事", "CCTV-6 电影", "CCTV-7 国防军事",
+    "CCTV-8 电视剧", "CCTV-9 纪录", "CCTV-11 戏曲",
+    "CCTV-12 社会与法", "CCTV-13 新闻", "CCTV-14 少儿", "CCTV-15 音乐",
+    "CCTV-16 奥林匹克", "CCTV-17 农业农村", "CCTV-4K 超高清",
+]
 
 # 需要特殊标记的频道（体育类）
 SPORTS_CHANNELS = SPORTS_CHANNELS  # noqa: F811
+
+# 时效性URL黑名单域名（这些URL带鉴权参数，短期可用但很快失效）
+EPHEMERAL_DOMAINS = [
+    "douyinliving.com",   # 抖音直播流（wsSecret/wsTime 参数时效性短）
+    "live.douyin.com",    # 抖音直播
+    "hls.douyin.com",     # 抖音 HLS
+]
 
 # 时效性URL黑名单域名（这些URL带鉴权参数，短期可用但很快失效）
 EPHEMERAL_DOMAINS = [
@@ -172,6 +186,9 @@ def normalize_channel_name(name):
         if match.group(0).endswith("+"):
             return f"CCTV-{num}+ 体育赛事"
         result = _num_to_channel(int(num))
+        # 过滤：CCTV-10 不予收录
+        if result == "CCTV-10 科教":
+            return None
         return result
 
     # 匹配中文名称: "CCTV4K 超高清", "CCTV5+ 体育赛事" 等
@@ -180,6 +197,19 @@ def normalize_channel_name(name):
             return ch_name
 
     return name
+
+
+def _num_to_channel(num_int):
+    """将 CCTV 频道数字映射为标准名称"""
+    channel_map = {
+        1: "CCTV-1 综合", 2: "CCTV-2 财经", 3: "CCTV-3 综艺",
+        4: "CCTV-4 中文国际", 5: "CCTV-5 体育", 6: "CCTV-6 电影",
+        7: "CCTV-7 国防军事", 8: "CCTV-8 电视剧", 9: "CCTV-9 纪录",
+        11: "CCTV-11 戏曲", 12: "CCTV-12 社会与法",
+        13: "CCTV-13 新闻", 14: "CCTV-14 少儿", 15: "CCTV-15 音乐",
+        16: "CCTV-16 奥林匹克", 17: "CCTV-17 农业农村",
+    }
+    return channel_map.get(num_int, f"CCTV-{num_int}")
 
 
 def is_ephemeral_url(url):
@@ -378,6 +408,24 @@ def _test_source_once(url, timeout):
     except Exception as e:
         err_msg = str(e)[:30]
         return (url, m3u8_latency, f"TS_FAIL({err_msg})", None)
+
+
+def get_channel_logo(name):
+    """获取频道 Logo URL"""
+    num_map = {
+        "CCTV-1 综合": "CCTV1", "CCTV-2 财经": "CCTV2",
+        "CCTV-3 综艺": "CCTV3", "CCTV-4 中文国际": "CCTV4",
+        "CCTV-5 体育": "CCTV5", "CCTV-5+ 体育赛事": "CCTV5PLUS",
+        "CCTV-6 电影": "CCTV6", "CCTV-7 国防军事": "CCTV7",
+        "CCTV-8 电视剧": "CCTV8", "CCTV-9 纪录": "CCTV9",
+        "CCTV-11 戏曲": "CCTV11",
+        "CCTV-12 社会与法": "CCTV12", "CCTV-13 新闻": "CCTV13",
+        "CCTV-14 少儿": "CCTV14", "CCTV-15 音乐": "CCTV15",
+        "CCTV-16 奥林匹克": "CCTV16", "CCTV-17 农业农村": "CCTV17",
+        "CCTV-4K 超高清": "CCTV4K",
+    }
+    code = num_map.get(name, "CCTV1")
+    return f"https://epg.pw/channel/{code}.png"
 
 
 # ─── 主流程 ───────────────────────────────────────────────
