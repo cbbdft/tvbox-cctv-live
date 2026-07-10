@@ -1,21 +1,21 @@
 # CCTV 直播源 - KO影视专用
-# 更新时间: 2026-07-10 06:56:54 CST
+# 更新时间: 2026-07-11 06:56:05 CST
 
 央视,#genre#
-CCTV-1 综合,http://play.kankanlive.com/live/1698234869325962.m3u8
-CCTV-2 财经,http://153.0.171.163:9901/tsfile/live/0002_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-3 综艺,http://123.163.114.168:85/tsfile/live/0003_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-4 中文国际,https://live-play-hls.cctvnews.cctv.com/CCTVChannel/channel_cctv4_mbd.m3u8?auth_key=1783666800-1-b59134a2ead43d7f783f943c8f535e7bb80c5169575b2e8efcd5b3ddea21b41c-96a1fc3c6c225c78e9026808895bf05a&yid=b59134a2ead43d7f783f943c8f535e7bb80c5169575b2e8efcd5b3ddea21b41c
-CCTV-5 体育 ⚽,http://112.123.243.37:50085/tsfile/live/0005_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-1 综合,http://222.223.41.27:8888/hls/1/index.m3u8
+CCTV-2 财经,http://116.128.243.121:85/tsfile/live/0002_1.m3u8?key=txiptv&playlive=0&authid=0
+CCTV-3 综艺,http://222.223.41.27:8888/hls/3/index.m3u8
+CCTV-4 中文国际,https://live-play-hls.cctvnews.cctv.com/CCTVChannel/channel_cctv4_mbd.m3u8?auth_key=1783753200-1-b59134a2ead43d7f783f943c8f535e7bb80c5169575b2e8efcd5b3ddea21b41c-91c97a812f2918b7fc093621dd20be4d&yid=b59134a2ead43d7f783f943c8f535e7bb80c5169575b2e8efcd5b3ddea21b41c
+CCTV-5 体育 ⚽,http://120.198.95.220:9901/tsfile/live/1019_1.m3u8?key=txiptv&playlive=1&down=1
 CCTV-5+ 体育赛事 ⚽,http://112.123.243.37:50085/tsfile/live/0006_1.m3u8?key=txiptv&playlive=0&authid=0
-CCTV-6 电影,http://221.226.51.220:50081/newlive/live/hls/6/live.m3u8
-CCTV-7 国防军事,http://222.223.41.27:8888/hls/7/index.m3u8
-CCTV-8 电视剧,http://153.0.171.163:9901/tsfile/live/1007_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-9 纪录,http://153.0.171.163:9901/tsfile/live/1008_1.m3u8?key=txiptv&playlive=1&authid=0
-CCTV-11 戏曲,http://112.123.243.37:50085/tsfile/live/0012_1.m3u8?key=txiptv&playlive=0&authid=0
-CCTV-12 社会与法,http://112.123.243.37:50085/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0
-CCTV-13 新闻,http://116.128.243.121:85/tsfile/live/0013_1.m3u8?key=txiptv&playlive=0&authid=0
-CCTV-14 少儿,http://222.223.41.27:8888/hls/14/index.m3u8
+CCTV-6 电影,http://222.223.41.27:8888/hls/6/index.m3u8
+CCTV-7 国防军事,http://118.193.115.2:9901/tsfile/live/0007_1.m3u8?key=txiptv
+CCTV-8 电视剧,http://121.57.88.206:898/hls/8/index.m3u8
+CCTV-9 纪录,http://222.223.41.27:8888/hls/9/index.m3u8
+CCTV-11 戏曲,http://222.223.41.27:8888/hls/11/index.m3u8
+CCTV-12 社会与法,http://222.223.41.27:8888/hls/12/index.m3u8
+CCTV-13 新闻,https://event.pull.hebtv.com/jishi/cp1.m3u8
+CCTV-14 少儿,https://event.pull.hebtv.com/jishi/cp2.m3u8
 CCTV-15 音乐,http://222.223.41.27:8888/hls/15/index.m3u8
-CCTV-16 奥林匹克,http://173.208.212.130:8181/720p/cctv16.m3u8
-CCTV-17 农业农村,http://183.129.255.66:8480/hls/18/index.m3u8
+CCTV-16 奥林匹克,https://epg.pw/stream/c1beb2abcba5aef09c2f58efc3ca84b76de2c7b9cf60762b0d79772d9e70d454.m3u8
+CCTV-17 农业农村,http://121.57.88.206:898/hls/17/index.m3u8
